@@ -1,0 +1,71 @@
+﻿@model MVCProject.Models.Userinfo
+
+@{
+    Layout = "~/Views/Shared/_loginAndregister.cshtml";
+}
+
+
+<div class="main">
+
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <img src="~/Home/images/Recipe-removebg-preview.png" class="logo" width="210px" height="160px" alt="">
+                    <form asp-action="register" method="POST"  class="register-form" id="register-form">
+
+                        
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input  asp-for="Firstname" type="text"  id="name" placeholder="First Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input  asp-for="Lastname"   type="text"  id="name" placeholder="Last Name" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+                            <input  asp-for="Email"type="email" name="email" id="email" placeholder="Your Email" />
+                        </div>
+                        
+
+                           
+                 
+                        <select class="form-select mb-2" aria-label="Default select example" name="role">
+                            <option selected>Regiser As</option>
+                            <option value="2">Chef</option>
+                            <option value="3">User</option>
+
+                        </select>
+                        
+                        <div class="form-group">
+                            <label for="User Name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="username" id="name" placeholder="User Name" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" name="password" id="pass" placeholder="Password" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Create" style="background-color:#b0b435" />
+                        </div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                    </form>
+                </div>
+                <div class="signup-image">
+                    <figure><img src="~/loginandregister/images/cheflogo.png" alt="sing up image"></figure>
+                   
+                    <a class="signup-image-link" asp-action="login" >I am already member</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div>
