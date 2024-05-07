@@ -3,6 +3,15 @@
     Layout = "~/Views/Shared/_loginAndregister.cshtml";
 }
 
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script type="text/javascript">
+    toastr.success('@TempData["message"]');
+</script>
+}
+
 <div class="main" >
     <section class="sign-in">
         <div class="container">
@@ -17,11 +26,11 @@
                     <form asp-action="login" method="POST" class="register-form" id="login-form">
                         <div class="form-group">
                             <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" asp-for="Username" id="your_name" placeholder="Your Name" />
+                            <input type="text" asp-for="Username" id="your_name" placeholder="Your Name" required />
                         </div>
                         <div class="form-group">
                             <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                            <input type="password" asp-for="Password" id="your_pass" placeholder="Password" />
+                            <input type="password" asp-for="Password" id="your_pass" placeholder="Password" required />
                         </div>
                         <div class="form-group">
                             <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />

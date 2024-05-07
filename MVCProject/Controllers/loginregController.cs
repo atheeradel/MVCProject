@@ -78,7 +78,8 @@ namespace MVCProject.Controllers
             
             }
             ModelState.AddModelError("", "UserName already exist try again");
-            return View();
+            TempData["message"] = "You Are Successfully Register to MasterChef";
+            return RedirectToAction("login");
         }
     }
 }

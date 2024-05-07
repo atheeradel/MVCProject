@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- Main css -->
     <link rel="stylesheet" href="~/loginandregister/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    
 </head>
 <body >
         @RenderBody()
@@ -20,5 +22,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/loginandregister/js/main.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
 </html>

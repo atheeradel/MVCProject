@@ -21,6 +21,13 @@ namespace MVCProject.Controllers
 
             
         }
+        public IActionResult Adminprofile()
+        {
+            var id = HttpContext.Session.GetInt32("AdminId");
+
+            var user = _context.Userinfos.Where(x => x.UserId == id).SingleOrDefault();
+            return View(user);
+        }
         public IActionResult Form()
         {
             return View();
