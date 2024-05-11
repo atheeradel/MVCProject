@@ -1,0 +1,99 @@
+﻿@model Userinfo
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+
+    .intro {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+</style>
+<div class="main-panel">
+    <div class="content-wrapper">
+<section class="intro">
+    <div>
+
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="card" style="border-radius: 1rem;">
+                            <div class="card-body p-5">
+
+                                <h1 class="mb-5 text-center">Edit your Profile</h1>
+
+                                <form asp-action="EditAdmin" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="UserId" />
+                                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form6Example1">First name</label>
+                                                <input asp-for="Firstname" type="text" id="form6Example1" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form6Example2">Last name</label>
+                                                <input asp-for="Lastname" type="text" id="form6Example2" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Text input -->
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form6Example3">Email</label>
+                                        <input asp-for="Email" type="email" id="form6Example3" class="form-control" />
+
+                                    </div>
+
+                                    <!-- Text input -->
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form6Example4">Address</label>
+                                        <input asp-for="Address" type="text" id="form6Example4" class="form-control" />
+
+                                    </div>
+
+                                    <!-- Email input -->
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form6Example5">Age</label>
+                                        <input asp-for="Age" type="number" id="form6Example5" class="form-control" />
+
+                                    </div>
+
+                                    <!-- Number input -->
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form6Example6">Phone Number</label>
+                                        <input asp-for="Phonenum" type="text" id="form6Example6" class="form-control" />
+
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <label asp-for="ImageFile" class="form-label" for="form6Example6">Image Profile</label>
+                                        <input asp-for="ImageFile" id="form6Example6" class="form-control" />
+
+                                    </div>
+
+
+
+
+
+
+
+                                    <!-- Submit button -->
+                                            <button type="submit" class="btn hvr-hover bg-gradient-primary">Edit </button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</div></div>

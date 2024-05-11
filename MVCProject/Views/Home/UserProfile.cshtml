@@ -12,7 +12,7 @@
                 <div class="login-box">
                     <div class="login-box">
 
-                        <a asp-action="" asp-controller="" class="btn hvr-hover mb-3" style="color:white" asp-route-id="">Edit Profile</a>
+                        <a asp-action="EditUser" asp-controller="Home" class="btn hvr-hover mb-3" style="color:white" asp-route-id="@Model.UserId">Edit Profile</a>
                     </div>
 
 
@@ -24,8 +24,9 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                             class="rounded-circle img-fluid" style="width: 150px;">
+                        <img src=@Url.Content("~/Images/" + @Model.ImagePath)
+                             asp-append-version="true"
+                             class=" img-fluid" style="width: 250px;" />
                         <h5 class="my-3">@Model.Firstname @Model.Lastname</h5>
                         
                         

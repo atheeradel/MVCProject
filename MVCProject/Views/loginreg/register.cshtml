@@ -4,6 +4,34 @@
     Layout = "~/Views/Shared/_loginAndregister.cshtml";
 }
 
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+
+        toastr["error"]("This User Name Exist try another one please! ")
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+}
+
 
 <div class="main">
 
@@ -29,11 +57,7 @@
                             <input  asp-for="Email"type="email" name="email" id="email" placeholder="Your Email" required />
                         </div>
                         
-
-                           
-                 
-                    
-                        
+                                                                                                              
                         <div class="form-group">
                             <label for="User Name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <input type="text" name="username" id="name" placeholder="User Name" required />
@@ -65,7 +89,7 @@
                     <figure><img src="~/loginandregister/images/cheflogo.png" alt="sing up image"></figure>
                    
                     <a class="signup-image-link" asp-action="login" >I am already member</a>
-                    <div asp-validation-summary="All" class="text-danger"></div>
+                     @* <div asp-validation-summary="All" class="text-danger"></div>  *@
                 </div>
             </div>
         </div>

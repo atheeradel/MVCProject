@@ -2,8 +2,57 @@
 @{
     Layout = "~/Views/Shared/_ChefIayout.cshtml";
 }
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
+<header class="main-header">
+    <!-- Start Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+        <div class="container">
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <img src="~/Home/images/Recipe-removebg-preview.png" class="logo" width="230px" height="160px" alt="">
+            </div>
+            <!-- End Header Navigation -->
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li class="nav-item active"><a class="nav-link" asp-action="ChefIndex" asp-controller="Home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="aboutuschef" asp-controller="Home">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="testChef" asp-controller="Home">Testimonal</a></li>
+
+                    <li class="nav-item"><a class="nav-link" asp-action="Create" asp-controller="Recipes">Add Recipe</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Recipes" asp-route-id="@Model.UserId">My Recipe</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Customer Request</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+            <!-- Start Atribute Navigation -->
+            <div class="attr-nav">
+                <i class="fa fa-user s_color ">@Model.Firstname @Model.Lastname</i>
+               
+
+
+
+
+            </div>
+            <!-- End Atribute Navigation -->
+        </div>
+        
+    </nav>
+    
+    <!-- End Navigation -->
+</header>
 <!-- Start Slider -->
-<h1>Welcome @Model.Firstname @Model.Lastname</h1>
+
 <div id="slides-shop" class="cover-slides">
     <ul class="slides-container">
         <li class="text-center">
@@ -57,24 +106,20 @@ center; margin:30px">
 <div class="categories-shop">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="shop-cat-box">
-                    <img class="img-fluid" src="~/Home/images/categories_img_01.jpg" alt="" />
-                    <a class="btn hvr-hover" href="#">Show Recipe</a>
+            @foreach (var item in ViewBag.category)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid " src=@Url.Content("~/Images/" + @item.CatImg)
+                             asp-append-version="true" class=" img-fluid" style="width: 400px; height:200px" />
+
+                        <a class="btn hvr-hover" asp-action="getrecipebycat" asp-route-id="@item.CatId">@item.CatName recipe </a>
+
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="shop-cat-box">
-                    <img class="img-fluid" src="~/Home/images/categories_img_02.jpg" alt="" />
-                    <a class="btn hvr-hover" href="#">show Recipe</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="shop-cat-box">
-                    <img class="img-fluid" src="~/Home/images/categories_img_03.jpg" alt="" />
-                    <a class="btn hvr-hover" href="#">show Recipe</a>
-                </div>
-            </div>
+            }
+
+
         </div>
     </div>
 </div>
@@ -120,97 +165,35 @@ center; margin:30px">
         </div>
 
         <div class="row special-list">
-            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="sale">Sale</p>
+            @foreach (var item in ViewBag.recipe)
+            {
+                <div class="col-lg-3 col-md-6 special-grid top-featured">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="new">New</p>
+                            </div>
+                            <img class="img-fluid " src=@Url.Content("~/Images/" + @item.Image)
+                                 asp-append-version="true" class=" img-fluid" style="width: 400px; height:250px" />
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a asp-action="ViewRecipe" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                   
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                               
+                            </div>
                         </div>
-                        <img src="~/Home/images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="#">Add to Cart</a>
+                        <div class="why-text">
+                            <h4>@item.Name</h4>
+                            <h5> $@item.Price</h5>
                         </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $7.79</h5>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-3 col-md-6 special-grid top-featured">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="new">New</p>
-                        </div>
-                        <img src="~/Home/images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="#">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $9.79</h5>
-                    </div>
-                </div>
-            </div>
+            }
 
-            <div class="col-lg-3 col-md-6 special-grid top-featured">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="sale">Sale</p>
-                        </div>
-                        <img src="~/Home/images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="#">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $10.79</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="sale">Sale</p>
-                        </div>
-                        <img src="~/Home/images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="#">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $15.79</h5>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>
@@ -220,122 +203,34 @@ center; margin:30px">
     <div class="col-12">
         <h2 class="noo-sh-title " style="text-align:center;">Meet Our Chef</h2>
     </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="hover-team">
-            <div class="our-team">
-                <img src="~/Home/images/chef6.jpg" alt="" />
-                <div class="team-content">
-                    <h3 class="title">Williamson</h3> <span class="post">Healty Food Chef</span>
+    @foreach (var item in ViewBag.chef)
+    {
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="hover-team">
+                <div class="our-team">
+                    <img src=@Url.Content("~/Images/" + @item.ImagePath)
+                         asp-append-version="true" img-fluid" style="width: 400px; height:400px" />
+                    <div class="team-content">
+                        <h3 class="title">@item.Firstname @item.Lastname</h3> <span class="post">@item.Email</span>
+                    </div>
+                    <ul class="social">
+                        <li>
+
+
+                            <a asp-route-id="@item.UserId" asp-action="getrecipebycheff" class="fa fa-plus"></a>
+                        </li>
+
+                    </ul>
+                    <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
                 </div>
-                <ul class="social">
-                    <li>
-                        <a href="#" class="fab fa-facebook"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-twitter"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-google-plus"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-youtube"></a>
-                    </li>
-                </ul>
-                <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
-            </div>
-            <div class="team-description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent urna diam, maximus ut ullamcorper quis, placerat id eros. Duis semper justo sed condimentum rutrum. Nunc tristique purus turpis. Maecenas vulputate. </p>
-            </div>
-            <hr class="my-0">
-        </div>
-    </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="hover-team">
-            <div class="our-team">
-                <img src="~/Home/images/chef3.jpg" alt="" />
-                <div class="team-content">
-                    <h3 class="title">Kristiana</h3> <span class="post">Arabian Chef Food</span>
+                <div class="team-description">
                 </div>
-                <ul class="social">
-                    <li>
-                        <a href="#" class="fab fa-facebook"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-twitter"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-google-plus"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-youtube"></a>
-                    </li>
-                </ul>
-                <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
+                <hr class="my-0">
             </div>
-            <div class="team-description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent urna diam, maximus ut ullamcorper quis, placerat id eros. Duis semper justo sed condimentum rutrum. Nunc tristique purus turpis. Maecenas vulputate. </p>
-            </div>
-            <hr class="my-0">
         </div>
-    </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="hover-team">
-            <div class="our-team">
-                <img src="~/Home/images/chef5.jpg" alt="" />
-                <div class="team-content">
-                    <h3 class="title">Steve Thomas</h3> <span class="post">Sea Food Chef</span>
-                </div>
-                <ul class="social">
-                    <li>
-                        <a href="#" class="fab fa-facebook"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-twitter"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-google-plus"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-youtube"></a>
-                    </li>
-                </ul>
-                <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
-            </div>
-            <div class="team-description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent urna diam, maximus ut ullamcorper quis, placerat id eros. Duis semper justo sed condimentum rutrum. Nunc tristique purus turpis. Maecenas vulputate. </p>
-            </div>
-            <hr class="my-0">
-        </div>
-    </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="hover-team">
-            <div class="our-team">
-                <img src="~/Home/images/chef7.jpg" alt="" />
-                <div class="team-content">
-                    <h3 class="title">Williamson</h3> <span class="post">Italian Food Chef</span>
-                </div>
-                <ul class="social">
-                    <li>
-                        <a href="#" class="fab fa-facebook"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-twitter"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-google-plus"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="fab fa-youtube"></a>
-                    </li>
-                </ul>
-                <div class="icon"> <i class="fa fa-plus" aria-hidden="true"></i> </div>
-            </div>
-            <div class="team-description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent urna diam, maximus ut ullamcorper quis, placerat id eros. Duis semper justo sed condimentum rutrum. Nunc tristique purus turpis. Maecenas vulputate. </p>
-            </div>
-            <hr class="my-0">
-        </div>
-    </div>
+    }
+
 </div>
 <!--End of chef section-->
 <!-- Start Instagram Feed--> <div class="instagram-box">

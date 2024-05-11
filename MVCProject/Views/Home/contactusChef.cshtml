@@ -1,0 +1,101 @@
+﻿@model Usermsg
+@{
+    Layout = "~/Views/Shared/_ChefIayout.cshtml";
+}
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Contact Us</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active"> Contact Us </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<!-- Start Contact Us  -->
+<div class="contact-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12">
+                <div class="contact-form-right">
+                    <h2>GET IN TOUCH</h2>
+                    <p> you can communicate with us by submit your issue </p>
+                    <form asp-action="contactusChef" asp-controller="Home" method="post">
+                        <input type="hidden" asp-for="MsgId" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="Username" placeholder="Your Name" required data-error="Please enter your name">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Your Email" name="Email"
+                                           class="form-control" required data-error="Please enter your email">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="Subject" placeholder="Subject" required data-error="Please enter your Subject">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="Msg" placeholder="Your Message" rows="4" data-error="Write your message" required></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <button type="submit" class="btn hvr-hover btn-rounded btn-block">Send Message</button>
+                                <div class="submit-button text-center">
+                                    @*  <button type="submit" class="btn hvr-hover btn-rounded btn-block">Send Message</button> *@
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="contact-info-left">
+                    @foreach (var item in ViewBag.ad)
+                    {
+                        <h2>@item.Contactusbannerimg</h2>
+                        <p>@item.Contactinfo </p>
+                    }
+
+                    <ul>
+                        @foreach (var item in ViewBag.con)
+                        {
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>Address: @item.Address</p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+962@item.Phonenum">+962 @item.Phonenum</a></p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-envelope"></i>Email: <a href="mailto:@item.Email">@item.Email</a></p>
+                            </li>
+                            break;
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Cart -->

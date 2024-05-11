@@ -1,0 +1,80 @@
+﻿@model MVCProject.Models.Recipe
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_ChefIayout.cshtml";
+}
+
+<h1 style="text-align:center;"class=" mb-5 mt-5">Create your recipe </h1>
+
+
+<hr />
+<section class="intro">
+    <div>
+
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="card" style="border-radius: 1rem;">
+                            <div class="card-body p-5">
+
+                                <h1 class="mb-5 text-center"><img src="~/Home/images/Recipe-removebg-preview.png" class="logo" width="230px" height="160px" alt="">  </h1>
+
+                                <form asp-action="Create"  method="post" asp-controller="Recipes" enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                   @*  <input type="hidden" value="@ViewBag.userid" asp-for="UserId" /> *@
+                                    <div class="form-group">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input asp-for="Name" class="form-control" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="CatId" class="control-label"></label>
+                                        <select asp-for="CatId" class="form-control" asp-items="ViewBag.CatId"></select>
+                                    </div> 
+
+
+                                    <div class="form-group">
+                                        <label asp-for="Ingrediants" class="control-label"></label>
+                                        <input asp-for="Ingrediants" class="form-control" />
+                                        <span asp-validation-for="Ingrediants" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Instruction" class="control-label"></label>
+                                        <input asp-for="Instruction" class="form-control" />
+                                        <span asp-validation-for="Instruction" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="ImageFile" class="control-label"></label>
+                                        <input asp-for="ImageFile" class="form-control" />
+                                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Price" class="control-label"></label>
+                                        <input asp-for="Price" class="form-control" />
+                                        <span asp-validation-for="Price" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Create" class="btn hvr-hover btn-rounded btn-block" />
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div>
+    <a asp-action="ChefIndex"  class="btn hvr-hover btn-rounded  m-5"  asp-controller="Home">Back to Home</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

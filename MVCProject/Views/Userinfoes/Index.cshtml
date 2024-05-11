@@ -1,0 +1,91 @@
+﻿@model IEnumerable<MVCProject.Models.Userinfo>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+<h1>User Information</h1>
+
+
+        <table class="table" id="example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+                        
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phonenum)
+            </th>
+            @* <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+                    @if (item.RoleId == 1)
+                    {
+                        continue;
+                    }
+                    <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phonenum)
+            </td>
+            @* <td>
+                @Html.DisplayFor(modelItem => item.ImagePath)
+            </td> *@
+            <td>
+                            @Html.DisplayFor(modelItem => item.Role.RoleName)
+            </td>
+            <td>
+
+                            <a asp-action="Details" asp-route-id="@item.UserId" class="btn btn-sm hvr-hover bg-gradient-primary" >Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-sm hvr-hover bg-gradient-primary">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div></div>

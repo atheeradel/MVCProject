@@ -1,0 +1,90 @@
+﻿@model MVCProject.Models.Userinfo
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    dl, dt {
+        font-size: 16px;
+    }
+</style>
+<div class="main-panel">
+    <div class="content-wrapper">
+<h1>Delete User</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<div class="mask d-flex align-items-center h-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="card-body p-5">
+
+                        <h1 class="mb-5 text-center">
+                            <img src=@Url.Content("~/Images/" + Model.ImagePath)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" /></h1>
+
+                        <div>
+                            <h4>Userinfo</h4>
+                            <hr />
+                            <dl class="row">
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Firstname)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Firstname)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Lastname)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Lastname)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Email)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Address)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Address)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Age)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Age)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Phonenum)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Phonenum)
+                                </dd>
+                                
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Role)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Role.RoleName)
+                                </dd>
+                            </dl>
+
+                            <form asp-action="Delete">
+                                <input type="hidden" asp-for="UserId" />
+                                <input type="submit" value="Delete" class="btn btn-sm btn-danger" /> |
+                                        <a asp-action="Index" class="btn btn-sm hvr-hover bg-gradient-primary">Back to List</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div></div>

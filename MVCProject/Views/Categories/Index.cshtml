@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MVCProject.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+<h3>Recipe Category</h3>
+
+<p>
+            <a asp-action="Create" class="btn hvr-hover mb-3 bg-gradient-primary" style="color:white;">Create New</a>
+</p>
+        <table class="table" id="example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CatName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageFile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatDes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatName)
+            </td>
+            <td>
+               
+                            <img src=@Url.Content("~/Images/" + item.CatImg)
+                                 asp-append-version="true" style="border-radius:20%;" width="100" height="100" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatDes)
+            </td>
+            <td>
+                            <a asp-action="Edit" asp-route-id="@item.CatId" class=" bg-gradient-primary" style="color:white;font-size:22px;font-family:'Times New Roman">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.CatId" class="   bg-gradient-primary" style="color:white;font-size:22px;font-family:'Times New Roman">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.CatId" class=" bg-gradient-primary" style="color:white;font-size:22px;font-family:'Times New Roman'">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div></div>

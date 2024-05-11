@@ -2,16 +2,34 @@
 @{
     Layout = "~/Views/Shared/_loginAndregister.cshtml";
 }
-
 @if (TempData["message"] != null)
 {
     <script src="/lib/jquery//dist/jquery.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script type="text/javascript">
-    toastr.success('@TempData["message"]');
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+
+        toastr["error"]("Your Password Or User Name Are Not Crroect Try Again!")
+   
+    toastr.options = {
+        "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+} 
 </script>
 }
-
+ 
 <div class="main" >
     <section class="sign-in">
         <div class="container">
@@ -39,7 +57,7 @@
                         <div class="form-group form-button">
                             <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" style="background-color:#b0b435" />
                         </div>
-                        <div asp-validation-summary="All" class="text-danger" style="color:red"></div>
+                        @* <div asp-validation-summary="All" class="text-danger" style="color:red"></div> *@
                     </form>
                     
                 </div>

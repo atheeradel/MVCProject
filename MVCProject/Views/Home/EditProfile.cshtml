@@ -12,8 +12,8 @@
   
 </style>
 <section class="intro">
-    <div 
-         >
+    <div> 
+         
         <div class="mask d-flex align-items-center h-100">
             <div class="container">
                 <div class="row justify-content-center">
@@ -23,7 +23,7 @@
 
                                 <h1 class="mb-5 text-center">Edit your Profile</h1>
 
-                                <form asp-action="EditProfile" asp-controller="Home">
+                                <form asp-action="EditProfile" asp-controller="Home" method="post" enctype="multipart/form-data">
                                     <input type="hidden" asp-for="UserId" />
                                     <!-- 2 column grid layout with text inputs for the first and last names -->
                                     <div class="row">
@@ -70,7 +70,13 @@
                                         <input  asp-for="Phonenum" type="text" id="form6Example6" class="form-control" />
                                         
                                     </div>
-
+                                    <div class="form-outline mb-4">
+                                        <label asp-for="ImageFile"  class="form-label" for="form6Example6">Image Profile</label>
+                                        <input asp-for="ImageFile" id="form6Example6" class="form-control" />
+                                        
+                                    </div>
+                                  
+                                    
                                     
 
                                     

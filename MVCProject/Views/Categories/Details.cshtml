@@ -1,0 +1,28 @@
+﻿@model MVCProject.Models.Category
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+<h3>Details of Category</h3>
+        <div class="card mb-3">
+             @Html.DisplayFor(model => model.ImageFile)
+            <img src=@Url.Content("~/Images/" + Model.CatImg)
+                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px"/>
+            <div class="card-body">
+                <h5 class="card-title"> @Html.DisplayFor(model => model.CatName)</h5>
+                <p class="card-text">@Html.DisplayFor(model => model.CatDes)</p>
+              
+            </div>
+            
+        </div>
+       
+<div>
+            <a asp-action="Edit" asp-route-id="@Model?.CatId" class="btn hvr-hover mb-3 bg-gradient-primary" style="color:white;">Edit</a> |
+            <a asp-action="Index" class="btn hvr-hover mb-3 bg-gradient-primary" style="color:white;">Back to List</a>
+</div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@model Testimonal
+@{
+    Layout = "~/Views/Shared/_Userlayout.cshtml";
+}
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
+
+<div class="contact-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12">
+                <div class="contact-form-right">
+                    <h2>Add Your Testimonal</h2>
+                    <p> Share Your Opinon With Us About MasterChef Recipes  </p>
+                    <form asp-action="Addtest" asp-controller="Home" method="post">
+                        <input type="hidden" asp-for="TestId" />
+                        <div class="row">
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="Msg" placeholder="Your Testimonal" rows="4" data-error="Write your message" required></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <button type="submit" class="btn hvr-hover btn-rounded btn-block" style="color:white">Add </button>
+                                <div class="submit-button text-center">
+                                    @*  <button type="submit" class="btn hvr-hover btn-rounded btn-block">Send Message</button> *@
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model MVCProject.Models.Contactu
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <h1>Details</h1>
+        <h4>Contact us Page</h4>
+        <hr />
+        <div class="card mb-3">
+           
+            <div class="card-body">
+                <h5 class="card-title">
+                    @Html.DisplayNameFor(model => model.Contactusbannerimg)
+                    <br />
+                    <p>@Html.DisplayFor(model => model.Contactusbannerimg)</p>
+                </h5>
+                <p class="card-text"> @Html.DisplayNameFor(model => model.Contactinfo)
+                    <br /> @Html.DisplayFor(model => model.Contactinfo)
+                </p>
+
+            </div>
+
+        </div>
+<div>
+    
+    
+</div>
+<div>
+            <a asp-action="Edit" asp-route-id="@Model?.ContId" class="btn btn-sm bg-gradient-primary" >Edit</a> |
+            <a asp-action="Index" class=" btn btn-sm bg-gradient-primary" >Back to List</a>
+</div>
+        </div>

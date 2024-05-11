@@ -1,0 +1,86 @@
+﻿@model IEnumerable<MVCProject.Models.Testimonal>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+        <h3 class="mb-5 mt-5" style="text-align:center; font-family:'Times New Roman';">
+            Testimonal By  Users
+        </h3>
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>
+                       Testimonal Message
+                    </th>
+                    <th>
+                        Date of testimonal
+                    </th>
+
+
+                    <th>
+                        User Name
+                    </th>
+                                               
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Control
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Msg)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateAdd)
+                        </td>
+
+                        
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.Firstname)-@Html.DisplayFor(modelItem => item.User.Lastname)
+                        </td>
+                        <td>
+                            @if (item.Status == 2)
+                            {
+                                <h6>Pending</h6>
+                            }
+                            @if (item.Status == 1)
+                            {
+                                <h6>Accepted</h6>
+                            }
+                            @if (item.Status == 0)
+                            {
+                                <h6>Rejected</h6>
+                            }
+
+                        </td>
+
+                        <td>
+
+
+                            <a asp-action="teststatus" asp-controller="Admin" asp-route-id="@item.TestId" class="btn btn-sm hvr-hover bg-gradient-primary">Accept </a> |
+                            <a asp-action="rejecttet" asp-controller="Admin" asp-route-id="@item.TestId" class="btn btn-sm hvr-hover  bg-gradient-primary">Reject </a> |
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

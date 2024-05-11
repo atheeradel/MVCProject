@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MVCProject.Models.Contactu>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+<h1>Index</h1>
+
+<p>
+            <a asp-action="Create" class=" btn btn-sm bg-gradient-primary" >Create New</a>
+</p>
+<table class="table" id="example">
+    <thead>
+        <tr>
+            <th>
+                Contact Us Title
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contactinfo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contactusbannerimg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contactinfo)
+            </td>
+            <td>
+                            <a asp-action="Edit" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Edit</a> |<br /><br />
+                            <a asp-action="Details" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Details</a> |<br /><br />
+                            <a asp-action="Delete" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Delete</a><br />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div></div>

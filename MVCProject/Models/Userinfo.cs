@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVCProject.Models;
 
 public partial class Userinfo
 {
     public decimal UserId { get; set; }
-   
+    [DisplayName(" First Name")]
     public string Firstname { get; set; } = null!;
-    
+    [DisplayName(" Last Name")]
     public string Lastname { get; set; } = null!;
     
     public string Email { get; set; } = null!;
@@ -17,12 +19,14 @@ public partial class Userinfo
     public string? Address { get; set; }
 
     public decimal? Age { get; set; }
-
+    [DisplayName("Phone Number")]
     public string? Phonenum { get; set; }
 
     public decimal? RoleId { get; set; }
-
+    [DisplayName("Image")]
     public string? ImagePath { get; set; }
+    [NotMapped]
+    public IFormFile ImageFile { get; set; }
 
     public virtual ICollection<Login> Logins { get; set; } = new List<Login>();
 

@@ -23,11 +23,19 @@ namespace MVCProject.Controllers
             return View();
         }
 
+        
+
         [HttpPost]
         public async Task<IActionResult> login( Login userlogin)
         {
             var user = await _context.Logins.
                 Where(x => x.Username == userlogin.Username && x.Password == userlogin.Password).SingleOrDefaultAsync();
+
+            if (user == null)
+            {
+                TempData["message"] = "Your Password Or User Name Are Not Crroect Try Again!";
+                 return RedirectToAction("login");
+            }
             
             var user2= await _context.Userinfos.Where(x =>x.UserId==user.UserId).SingleOrDefaultAsync();
             if (user != null)
@@ -47,17 +55,24 @@ namespace MVCProject.Controllers
 
                 }
             }
-            ModelState.AddModelError("", "UserName or Password are incorret");
+            //ModelState.AddModelError("", "UserName or Password are incorret");
             return View();
         }
         [HttpPost]
         public IActionResult register(Userinfo user,string role,string username,string password)
         {
             var u = _context.Logins.Where(x => x.Username == username).SingleOrDefault();
-            if (u == null) { 
-                if (ModelState.IsValid)
+            if (u != null)
             {
-                if (role == "2")
+                TempData["message"] = "This User Name Exist try another one please! ";
+                return RedirectToAction("register");
+
+            }
+
+            if (u == null) {
+                
+               
+                    if (role == "2")
                 {
                     user.RoleId = 2;
                 }
@@ -73,13 +88,15 @@ namespace MVCProject.Controllers
                 log.UserId = user.UserId; 
                 _context.Add(log);
                 _context.SaveChanges();
-                    
-            }
+                  TempData["message"] = "You Are Successfully Register to MasterChef"; }
             
-            }
-            ModelState.AddModelError("", "UserName already exist try again");
-            TempData["message"] = "You Are Successfully Register to MasterChef";
-            return RedirectToAction("login");
+                
+            
+            
+            
+            //ModelState.AddModelError("", "UserName already exist try again");
+            
+            return RedirectToAction("Index","Home");
         }
     }
 }

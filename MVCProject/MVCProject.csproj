@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Home\fonts\" />
-    <Folder Include="wwwroot\test\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>

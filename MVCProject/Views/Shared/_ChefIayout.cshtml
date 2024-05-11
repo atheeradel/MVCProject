@@ -30,8 +30,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
 
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+   
+    <link href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css" rel="stylesheet" />
 
 
 </head>
@@ -56,7 +57,8 @@
                         <ul>
                             <li><a asp-action="ChefProfile" asp-controller="Home"><i class="fa fa-user s_color"></i> My Account</a></li>
 
-                            <li><a href="#"><i class="fas fa-headset"></i> Contact Us</a></li>
+                            <li><a asp-action="contactusChef" asp-controller="Home"><i class="fas fa-headset"></i> Contact Us</a></li>
+                            <li><a  asp-action="ChefIndex" asp-controller="Home"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Home</a></li>
                         </ul>
                     </div>
                 </div>
@@ -64,7 +66,7 @@
                     <div class="login-box">
                         <div class="login-box">
 
-                            <a asp-action="" asp-controller="" class="btn hvr-hover" style="color:white">LOG-OUT</a>
+                            <a asp-action="logout" asp-controller="Home" class="btn hvr-hover" style="color:white">LOG-OUT</a>
                         </div>
 
 
@@ -72,30 +74,18 @@
                     <div class="text-slid-box">
                         <div id="offer-box" class="carouselTicker">
                             <ul class="offer-box">
-                                <li>
-                                    <i class="fab fa-opencart"></i> Discover delectable recipes to tantalize your taste buds!
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Get cooking inspiration with our Delecious recipes
-                                </li>
+                                
                                 <li>
                                     <i class="fab fa-opencart"></i> Join our culinary community and embark on a flavorful journey!
                                 </li>
                                 <li>
                                     <i class="fab fa-opencart"></i> Find your next favorite dish with our diverse recipe selection.
                                 </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Now
-                                </li>
+                                
                                 <li>
                                     <i class="fab fa-opencart"></i> Elevate your cooking game with expert tips from top chefs
                                 </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Unleash your inner chef with our step-by-step recipes
-                                </li>
+                               
                             </ul>
                         </div>
                     </div>
@@ -105,50 +95,7 @@
     </div>
     <!-- End Main Top -->
     <!-- Start Main Top -->
-    <header class="main-header">
-        <!-- Start Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container">
-                <!-- Start Header Navigation -->
-                <div class="navbar-header">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <a class="navbar-brand" href="index.html"><img src="~/Home/images/Recipe-removebg-preview.png" class="logo" width="230px" height="160px" alt=""></a>
-                </div>
-                <!-- End Header Navigation -->
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="navbar-menu">
-                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                       
-
-                        <li class="nav-item"><a class="nav-link" href="gallery.html">Add Recipe</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Customer Request</a></li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-                <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-
-                    <div class="input-group rounded">
-                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                        <span class="input-group-text border-0" id="search-addon" style="background-color:#b0b435">
-                            <i class="fas fa-search"></i>
-                        </span>
-                    </div>
-
-
-
-
-                </div>
-                <!-- End Atribute Navigation -->
-            </div>
-
-        </nav>
-        <!-- End Navigation -->
-    </header>
+   
     <!-- End Main Top -->
         @RenderBody()
     <!-- Start Footer  -->
@@ -264,6 +211,32 @@
     <script src="~/Home/js/form-validator.min.js"></script>
     <script src="~/Home/js/contact-form-script.js"></script>
     <script src="~/Home/js/custom.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js" defer></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js" defer></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ]
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

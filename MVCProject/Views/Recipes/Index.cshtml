@@ -1,0 +1,96 @@
+﻿@model IEnumerable<MVCProject.Models.Recipe>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_ChefIayout.cshtml";
+}
+
+
+
+
+<h1 class="mb-5 mt-5">
+    <a asp-action="Create">Create New Recipe</a>
+</h1>
+<table class="table table-responsive mb-5 mt-5" id="example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ingrediants)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instruction)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dateadd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cat)
+            </th>
+            <th>
+                Control
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ingrediants)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instruction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dateadd)
+            </td>
+            <td>
+                    <img src=@Url.Content("~/Images/" + item.Image)
+                         asp-append-version="true"  width="200px" height="150px" />
+            </td>
+            <td>
+                    @if (item.Status == 2)
+                    {
+                        <h4>Pending</h4>
+                    }
+                    @if (item.Status == 1)
+                    {
+                        <h4>Accepted</h4>
+                    }
+                    @if (item.Status == 0)
+                    {
+                        <h4>Rejected</h4>
+                    }
+                   
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cat.CatName)
+            </td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RecId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RecId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RecId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

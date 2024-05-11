@@ -1,0 +1,97 @@
+﻿@model IEnumerable<MVCProject.Models.Recipe>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+<h3 class="mb-5 mt-5" style="text-align:center; font-family:'Times New Roman';">
+   Recipe OF Chef
+</h3>
+<table class="table" id="example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+          
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Dateadd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+           
+            <th>
+                Category 
+            </th>
+                    <th>
+                Status
+                    </th>
+            <th>
+                Control
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dateadd)
+                </td>
+                <td>
+                    <img src=@Url.Content("~/Images/" + item.Image)
+                         asp-append-version="true" width="200px" height="150px" />
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cat.CatName)
+                </td>
+                        <td>
+                            @if (item.Status == 2)
+                            {
+                                <h6>Pending</h6>
+                            }
+                            @if (item.Status == 1)
+                            {
+                                <h6>Accepted</h6>
+                            }
+                            @if (item.Status == 0)
+                            {
+                                <h6>Rejected</h6>
+                            }
+
+                        </td>
+
+                <td>
+
+
+                            <a asp-action="recipestatus" asp-controller="Admin" asp-route-id="@item.RecId" class="btn hvr-hover bg-gradient-primary">Accept Recipe</a> |
+                            <a asp-action="rejectstatus" asp-controller="Admin" asp-route-id="@item.RecId" class="btn hvr-hover  bg-gradient-primary">Reject Recipe</a> |
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div></div>
