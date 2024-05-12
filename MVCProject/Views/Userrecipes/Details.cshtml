@@ -1,0 +1,33 @@
+﻿@model MVCProject.Models.Userrecipe
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+        <h3>Details of Users Request</h3>
+
+        <hr />
+        <div class="card mb-3">
+            
+            <div class="card-body">
+                <h5 class="card-title">Recipe Name: @Html.DisplayFor(model => model.Rec.Name) </h5>
+                <p class="card-text">  User Name:@Html.DisplayFor(model => model.User.Firstname)-@Html.DisplayFor(model => model.User.Lastname)</p>
+                <p class="card-text"> Invoice :@Html.DisplayFor(model => model.Rec.Price)</p>
+                <p class="card-text">Purchase Date:@Html.DisplayFor(model => model.ReqDate)</p>
+              
+            </div>
+        </div>
+        <div>
+        </div>
+        <div>
+            <a asp-action="Index" class="btn btn-sm hvr-hover bg-gradient-primary">Back to List</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCProject.Models;
@@ -64,6 +65,73 @@ namespace MVCProject.Controllers
             ViewBag.recipe = _context.Recipes.Where(x => x.Status == 1).ToList();
             return View();
         }
+
+        public IActionResult checkout(int id )
+        {
+            var rec = _context.Recipes.Where(x => x.RecId == id).SingleOrDefault();
+            return View(rec);
+        }
+        [HttpPost]
+        public IActionResult checkout(string nameoncard, string number, DateTime date, string cvv,int id)
+        {
+            var v = _context.Visas.ToList();
+            var r = _context.Recipes.Where(x => x.RecId == id).SingleOrDefault();
+            var price = r.Price;
+            foreach (var item in v)
+            {
+                if(item.Cardname==nameoncard && item.Cardnum==number  && item.Cvc == cvv && item.Amountofmoney> price && item.Expiredate>=date)
+                {
+                    
+                    Userrecipe rec = new Userrecipe();
+                    var userid = HttpContext.Session.GetInt32("UserId");
+                    item.Amountofmoney = item.Amountofmoney - price;
+                    rec.UserId = userid;
+                    rec.RecId = id;
+                    rec.ReqDate = DateTime.Now;
+                    _context.Add(rec);
+                    _context.SaveChanges();
+                    
+                    TempData["message"] = "you are successfully checkout , thank you ";
+                    break;
+                }
+            }
+            return View(r);
+        }
+
+        public IActionResult userorder()
+        {
+            var id = HttpContext.Session.GetInt32("UserId");
+            
+			var modelContext = _context.Userrecipes.Where(x => x.UserId == id).Include(u => u.Rec).Include(u => u.User);
+			return View( modelContext.ToList());
+
+			
+        }
+
+        public IActionResult customerreq()
+        {
+            var chef = HttpContext.Session.GetInt32("ChefId");
+            var rec = _context.Recipes.Where(x => x.UserId == chef).ToList();
+            var modelContext = _context.Userrecipes.Where(x=>x.Rec.UserId==chef).Include(u => u.Rec).Include(u => u.User).ToList();
+            
+           
+            return View(modelContext);
+
+            
+        }
+
+
+        //public IActionResult Discount(string code,int id)
+        //{
+        //    if(code== "offT30")
+        //    {
+        //        var rec= _context.Recipes.Where(x => x.RecId == id).SingleOrDefault();
+        //        ViewBag.discount = ((int)rec.Price) - (0.10* (int)rec.Price); 
+        //    }
+        //    return RedirectToAction("checkout(id)");
+        //}
+
+
 
         public IActionResult getrecipebycategory(int id)
         {  
@@ -231,6 +299,7 @@ namespace MVCProject.Controllers
             TempData["message"] = "Your Testimonal Successfully Send";
             return View();
         }
+
 
 
         public IActionResult testimonal()

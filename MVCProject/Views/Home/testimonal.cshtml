@@ -28,7 +28,7 @@
             @foreach(var item in Model)
             {
                 <div class="testimonial-item text-center">
-                    <img src=@Url.Content("~/Images/" +@Html.DisplayFor(modelItem => item.User.ImagePath) )
+                    <img src=@Url.Content("~/Images/" +item.User.ImagePath )
                          asp-append-version="true"
                          class=" img-fluid" style="width: 90px; height: 90px;">
                 <div class="testimonial-text text-center p-4">

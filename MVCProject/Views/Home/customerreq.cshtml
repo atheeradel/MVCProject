@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MVCProject.Models.Userrecipe>
+@{
+
+    Layout = "~/Views/Shared/_ChefIayout.cshtml";
+}
+
+        <h1 style="text-align:center" class="m-5">User Request</h1>
+
+<div class="wishlist-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table class="table" id="example">
+                        <thead>
+                            <tr>
+
+
+                                <th>
+                                    Recipe Name
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.User)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ReqDate)
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Control
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Rec.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.User.Firstname)- @Html.DisplayFor(modelItem => item.User.Lastname)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ReqDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Rec.Price)
+                                    </td>
+                                    <td>
+
+                                        <a class=" btn hvr-hover" style="color:white">Send Invoice by Email</a>
+                                        <a class="btn hvr-hover" style="color:white">Send Recibe by Email</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+

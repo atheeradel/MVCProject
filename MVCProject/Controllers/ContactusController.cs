@@ -61,8 +61,10 @@ namespace MVCProject.Controllers
             {
                 _context.Add(contactu);
                 await _context.SaveChangesAsync();
+                TempData["message"] = "you are successfuly created the record ";
                 return RedirectToAction(nameof(Index));
             }
+
             return View(contactu);
         }
 
@@ -112,6 +114,7 @@ namespace MVCProject.Controllers
                         throw;
                     }
                 }
+                TempData["message"] = "you are successfuly updated the record";
                 return RedirectToAction(nameof(Index));
             }
             return View(contactu);
@@ -151,6 +154,7 @@ namespace MVCProject.Controllers
             }
             
             await _context.SaveChangesAsync();
+            TempData["message"] = "you are successfuly deleted the record";
             return RedirectToAction(nameof(Index));
         }
 

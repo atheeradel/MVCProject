@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MVCProject.Models.Userrecipe>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+<h1>User Request</h1>
+
+
+        <table class="table" id="example">
+    <thead>
+        <tr>
+            
+           
+            <th>
+                Recipe Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReqDate)
+                    </th>
+                    <th>
+                        Price
+                    </th>
+            <th>
+                Control
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Rec.Name)
+            </td>
+            <td>
+                            @Html.DisplayFor(modelItem => item.User.Firstname)- @Html.DisplayFor(modelItem => item.User.Lastname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReqDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rec.Price)
+                        </td>
+            <td>
+
+                            <a asp-action="Details" asp-route-id="@item.ReqId" class=" btn btn-sm bg-gradient-primary">Details</a>
+
+                        </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div></div>

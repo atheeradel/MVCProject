@@ -4,6 +4,14 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
 <div class="main-panel">
     <div class="content-wrapper">
 <h1>Index</h1>

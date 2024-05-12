@@ -82,7 +82,7 @@
 
                     <div class="price-box-bar">
                         <div class="cart-and-bay-btn">
-                            <a class="btn hvr-hover" data-fancybox-close="" href="#">Buy Now</a>
+                           
                             
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                     <div class="add-to-btn">
                         <div class="add-comp">
                             <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
-                          
+                            
                         </div>
                         <div class="share-bar">
                             <a class="btn hvr-hover" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
@@ -119,7 +119,7 @@
                         <div class="products-single fix">
                             <div class="box-img-hover">
                                     <img src=@Url.Content("~/Images/" + item.Image)
-                                         asp-append-version="true" class=" d-block w-100" />
+                                         asp-append-version="true" class=" d-block w-100" width="300px" height="250px" />
                                 <div class="mask-icon">
                                     <ul>
                                             <li><a asp-action="ViewRecipe" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
