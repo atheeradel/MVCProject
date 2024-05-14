@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="3.4.19" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.29" />
@@ -23,6 +24,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\Home\fonts\" />
     <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\pdfs\" />
   </ItemGroup>
 
   <ItemGroup>

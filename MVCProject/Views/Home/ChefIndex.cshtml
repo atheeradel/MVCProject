@@ -27,11 +27,22 @@
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                     <li class="nav-item active"><a class="nav-link" asp-action="ChefIndex" asp-controller="Home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="aboutuschef" asp-controller="Home">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-action="testChef" asp-controller="Home">Testimonal</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="searchrecipechef" asp-controller="Home">Recipes</a></li>
+                    <li class="nav-item"> <a class="nav-link" asp-action="testChef" asp-controller="Home">Testimonal</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Chif List</a>
+                        <ul class="dropdown-menu">
 
-                    <li class="nav-item"><a class="nav-link" asp-action="Create" asp-controller="Recipes">Add Recipe</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Recipes" asp-route-id="@Model.UserId">My Recipe</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-action="customerreq" asp-controller="Home" >Customer Request</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-action="Create" asp-controller="Recipes">Add Recipe</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Recipes" asp-route-id="@Model.UserId">My Recipe</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-action="customerreq" asp-controller="Home">Customer Request</a></li>
+
+
+
+                        </ul>
+                    </li>
+                    
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -179,7 +190,7 @@ center; margin:30px">
                                 <ul>
                                     <li><a asp-action="ViewRecipe" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                    
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                  
                                 </ul>
                                
                             </div>

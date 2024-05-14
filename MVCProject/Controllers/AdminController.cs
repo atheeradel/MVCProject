@@ -126,8 +126,111 @@ namespace MVCProject.Controllers
         public IActionResult recipeIndex()
         {
             var modelContext = _context.Recipes.Include(r => r.Cat).Include(r => r.User).ToList();
+            ViewBag.TotalPrice = modelContext.Sum(x => x.Price);
             return View( modelContext);
         }
+
+        [HttpPost]
+        public IActionResult recipeIndex(DateTime? startDate, DateTime? endDate)
+        {
+            var result = _context.Recipes.Include(r => r.Cat).Include(r => r.User).ToList();
+
+            if (startDate == null && endDate == null)
+            {
+                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
+                return View(result);
+            }
+            else if (startDate != null && endDate == null)
+            {
+
+                result = result.Where(x => x.Dateadd.Value.Date >= startDate).ToList();
+                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
+
+                return View(result);
+            }
+            else if (startDate == null && endDate != null)
+            {
+
+                result = result.Where(x => x.Dateadd.Value.Date <= endDate).ToList();
+                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
+
+                return View(result);
+            }
+            else
+            {
+
+                result = result.Where(x => x.Dateadd.Value.Date >= startDate && x.Dateadd.Value.Date <= endDate).ToList();
+                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
+                return View(result);
+            }
+        }
+    
+        public IActionResult reports()
+        {
+            var modelContext = _context.Userrecipes.Include(u => u.Rec).Include(u => u.User);
+            ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
+            ViewBag.Totalsales = (int)modelContext.Sum(x => x.Rec.Price)+ modelContext.Sum(x => (int)x.Rec.Price)*0.05;
+            ViewBag.netprofit = ViewBag.Totalsales - 20;
+            return View( modelContext.ToList());
+        }
+        [HttpPost]
+        public IActionResult reports(DateTime? startDate, DateTime? endDate)
+        {
+            var modelContext = _context.Userrecipes.Include(u => u.Rec).Include(u => u.User).ToList();
+            ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
+            ViewBag.Totalsales = (int)modelContext.Sum(x => x.Rec.Price) + modelContext.Sum(x => (int)x.Rec.Price) * 0.05;
+            ViewBag.netprofit = ViewBag.Totalsales - 20;
+            if (startDate == null && endDate == null)
+            {
+                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
+
+                ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
+                ViewBag.Totalsales = (int)modelContext.Sum(x => x.Rec.Price) + modelContext.Sum(x => (int)x.Rec.Price) * 0.05;
+                ViewBag.netprofit = ViewBag.Totalsales - 20;
+                return View(modelContext);
+            }
+            else if (startDate != null && endDate == null)
+            {
+
+                modelContext = modelContext.Where(x => x.ReqDate.Value.Date >= startDate).ToList();
+                ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
+                ViewBag.Totalsales = (int)modelContext.Sum(x => x.Rec.Price) + modelContext.Sum(x => (int)x.Rec.Price) * 0.05;
+                ViewBag.netprofit = ViewBag.Totalsales - 20;
+
+
+                return View(modelContext);
+            }
+            else if (startDate == null && endDate != null)
+            {
+
+                modelContext = modelContext.Where(x => x.ReqDate.Value.Date <= endDate).ToList();
+                ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
+                ViewBag.Totalsales = (int)modelContext.Sum(x => x.Rec.Price) + modelContext.Sum(x => (int)x.Rec.Price) * 0.05;
+                ViewBag.netprofit = ViewBag.Totalsales - 20;
+                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
+
+                return View(modelContext);
+            }
+            else
+            {
+
+                modelContext = modelContext.Where(x => x.ReqDate.Value.Date >= startDate && x.ReqDate.Value.Date <= endDate).ToList();
+                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
+                ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
+                ViewBag.Totalsales = (int)modelContext.Sum(x => x.Rec.Price) + modelContext.Sum(x => (int)x.Rec.Price) * 0.05;
+                ViewBag.netprofit = ViewBag.Totalsales - 20;
+                return View(modelContext);
+            }
+        }
+
+
+
+
+
+
+
+
+
 
         public IActionResult test()
         {

@@ -15,6 +15,13 @@
 <h3 class="mb-5 mt-5" style="text-align:center; font-family:'Times New Roman';">
    Recipe OF Chef
 </h3>
+        <form asp-action="recipeIndex">
+            <label><h5>start Date</h5></label>
+            <input type="date" name="startDate" class="form-control-sm m-2" />
+            <label><h5>End Date</h5></label>
+            <input type="date" name="endDate" class="form-control-sm m-2" />
+            <button class="btn btn-md  hvr-hover bg-gradient-primary" type="submit">Search</button>
+        </form>
 <table class="table" id="example">
     <thead>
         <tr>
@@ -86,8 +93,8 @@
                 <td>
 
 
-                            <a asp-action="recipestatus" asp-controller="Admin" asp-route-id="@item.RecId" class="btn hvr-hover bg-gradient-primary">Accept Recipe</a> |
-                            <a asp-action="rejectstatus" asp-controller="Admin" asp-route-id="@item.RecId" class="btn hvr-hover  bg-gradient-primary">Reject Recipe</a> |
+                            <a asp-action="recipestatus" asp-controller="Admin" asp-route-id="@item.RecId" class="btn btn-sm  hvr-hover bg-gradient-primary">Accept Recipe</a> |
+                            <a asp-action="rejectstatus" asp-controller="Admin" asp-route-id="@item.RecId" class="btn btn-sm hvr-hover  bg-gradient-primary">Reject Recipe</a> |
                     
                 </td>
             </tr>

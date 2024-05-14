@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@* @inject HttpContextAccessor accessor; *@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -50,7 +51,7 @@
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="nav-profile-img">
-                                <img src="~/Admin/assets/images/OIP.jpg" alt="profile" />
+                                <img src="~/Images/728b9235-7d2c-4e40-ad19-5e45c044bedc_cheflogo.png" alt="profile" />
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
@@ -89,15 +90,16 @@
                     <li class="nav-item nav-profile">
                         <a href="#" class="nav-link">
                             <div class="nav-profile-image">
-                                <img src="~/Admin/assets/images/OIP.jpg" alt="profile" />
+                                <img src="~/Images/728b9235-7d2c-4e40-ad19-5e45c044bedc_cheflogo.png" alt="profile" />
 
 
                                 <span class="login-status online"></span>
                                 <!--change to offline or busy as needed-->
-                            </div>
+                            </div> @* var id=@accessor.HttpContext.Session.GetInt32("AdminId"); *@
+                           
                             <div class="nav-profile-text d-flex flex-column">
                                 <span class="font-weight-bold mb-2"></span>
-                                <span class="text-secondary text-small">Admin of MasterChef</span>
+                                <span class="text-secondary text-small">MasterChef Admin</span>
                             </div>
                             <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                         </a>
@@ -185,7 +187,7 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" aria-expanded="false" aria-controls="charts">
+                        <a class="nav-link" aria-expanded="false" aria-controls="charts" asp-action="reports" asp-controller="Admin">
                             <span class="menu-title">Reports of MasterChef </span>
                             <i class="mdi mdi-chart-bar menu-icon"></i>
                         </a>

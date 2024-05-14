@@ -4,6 +4,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCProject.Models;
 using System.Diagnostics;
+using System.Reflection.Metadata;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using MVCProject.Models;
+using System.Net.Mail;
+
+
 
 namespace MVCProject.Controllers
 {
@@ -90,8 +100,75 @@ namespace MVCProject.Controllers
                     rec.ReqDate = DateTime.Now;
                     _context.Add(rec);
                     _context.SaveChanges();
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        iTextSharp.text.Document doc = new iTextSharp.text.Document();
+                        Font font;
+                        PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
+                        doc.Open();
+                        doc.SetPageSize(PageSize.A4);
+                        doc.SetMargins(10f, 10f, 25f, 10f);
+
+                        Paragraph title = new Paragraph("Master Chef Recipe");
+                        font = FontFactory.GetFont("Tahoma", 8f, 1);
+                        string path = _webHostEnvironment.WebRootPath + "/Home/images";
+                        string path2 = _webHostEnvironment.WebRootPath + "/Images";
+
+                        string imgcombine = Path.Combine(path, "Recipe-removebg-preview.png");
+                        string imgcombine2 = Path.Combine(path2, $"{r.Image}");
+                        Image img = Image.GetInstance(imgcombine);
+                        Image img2 = Image.GetInstance(imgcombine2);
+                        img.ScaleToFit(300f, img.Height);
+
+                        img.BorderColor = BaseColor.Black;
+                        img.BorderWidth = 2f;
+                        img2.ScaleToFit(200f, img.Height);
+                        img2.BorderWidth = 1f;
+                        doc.Add(img);
+
+                        // Add content to PDF
+                        doc.Add(new Paragraph($"Welcome To Master Chef our customer  Thank you for your trust in our recipes 🙏"));
+                        doc.Add(new Paragraph($"   "));
+                        doc.Add(new Paragraph($"Your Recipe Name 🍽️: {r.Name}"));
+                        doc.Add(new Paragraph($"   "));
+                        doc.Add(new Paragraph($"Your Recipe Ingredients: {r.Ingrediants}"));
+                        doc.Add(new Paragraph($"   "));
+                        doc.Add(new Paragraph($"Your Recipe Instructions: {r.Instruction}"));
+                        doc.Add(img2);
+                        doc.Add(new Paragraph($"   "));
+                        doc.Add(new Paragraph($" Dont Forget to share us your opinon for our recipes 😉  "));
+                        // Add other properties as needed
+
+                        doc.Close();
+
+                        // Store PDF in wwwroot
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        string pdfPath = Path.Combine(wwwRootPath, "pdfs", "generated.pdf");
+
+                        using (var fileStream = new FileStream(pdfPath, FileMode.Create))
+                        {
+                            memoryStream.WriteTo(fileStream);
+                        }
+                    }
+                    var record = _context.Userinfos.Where(x => x.UserId == userid).SingleOrDefault();
+                   
+                    MailMessage mail = new MailMessage();
+                    SmtpClient SmtpServer = new SmtpClient("smtp.ethereal.email");
+                    SmtpServer.Port = 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("liliane79@ethereal.email", "U9Qmf8sPcwKFhHXfVP");
+                    SmtpServer.EnableSsl = true;
+                    //MailAddress from = new MailAddress("MasterChef@gamil.com");
+                    mail.From = new MailAddress("liliane79@ethereal.email");
+                    mail.To.Add($"{record.Email}");
+                    mail.Body = $"Thank You {record.Firstname} {record.Lastname} for your Purchase  your invoice is ${r.Price} and your recipe is by this attached Pdf File"; ;
+                    Attachment attachment = new Attachment("D:\\dirsttask\\MVCProject - Copy\\MVCProject\\wwwroot\\pdfs\\generated.pdf");
+                    mail.Attachments.Add(attachment);
+                    SmtpServer.Send(mail);
+                    TempData["message"] = "you are successfully checkout , Check your email to see your Recipe ";
                     
-                    TempData["message"] = "you are successfully checkout , thank you ";
+                    
+                     
+
                     break;
                 }
             }
@@ -159,6 +236,92 @@ namespace MVCProject.Controllers
             return View(rec);
         }
 
+        public IActionResult searchrecipe()
+        {
+            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+            ViewBag.category = _context.Categories.ToList();
+            return View(rec);
+        }
+
+        [HttpPost]
+        public IActionResult searchrecipe(string word)
+        {
+            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+            ViewBag.category = _context.Categories.ToList();
+            word = word.ToLower();
+            if (String.IsNullOrEmpty(word))
+            {
+                return View(rec);
+            }
+            else
+            {
+                rec = rec.Where(s => s.Name.ToLower().Contains(word)).ToList();
+                return View(rec);
+            }
+
+
+
+        }
+
+        public IActionResult searchrecipechef()
+        {
+            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+            ViewBag.category = _context.Categories.ToList();
+            return View(rec);
+        }
+
+        [HttpPost]
+        public IActionResult searchrecipechef(string word)
+        {
+            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+            ViewBag.category = _context.Categories.ToList();
+            word = word.ToLower();
+            if (String.IsNullOrEmpty(word))
+            {
+                return View(rec);
+            }
+            else
+            {
+                rec = rec.Where(s => s.Name.ToLower().Contains(word)).ToList();
+                return View(rec);
+            }
+
+
+        }
+
+        public IActionResult searchrecipegust()
+        {
+            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+            ViewBag.category = _context.Categories.ToList();
+            return View(rec);
+        }
+
+        [HttpPost]
+        public IActionResult searchrecipegust(string word)
+        {
+            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+            ViewBag.category = _context.Categories.ToList();
+            word=word.ToLower();
+            if (String.IsNullOrEmpty(word))
+            {
+                return View(rec);
+            }
+            else
+            {
+                rec = rec.Where(s => s.Name.ToLower().Contains(word)).ToList();
+                return View(rec);
+            }
+
+
+        }
+
+
+
+
+
+
+
+
 
         public IActionResult getrecipebycheff(int id)
         {
@@ -173,6 +336,13 @@ namespace MVCProject.Controllers
 
             return View(rec);
         }
+        
+       
+
+
+
+
+
         public IActionResult UserIndex()
         {
             var id = HttpContext.Session.GetInt32("UserId");
