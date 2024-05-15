@@ -1,0 +1,101 @@
+﻿@model IEnumerable<MVCProject.Models.Wishlist>
+
+@{
+    
+    Layout = "~/Views/Shared/_Userlayout.cshtml";
+}
+
+<h2 class="mb-5 mt-5" style="text-align:center;">
+    My Wish List
+</h2>
+<div class="wishlist-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Recipe Name</th>
+                                <th>Unit Price </th>
+                                <th>Add Item</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                @foreach (var item in Model)
+                                {<tr>
+                                    <td class="thumbnail-img">
+                                        <a href="#">
+                                            <img src=@Url.Content("~/Images/" + item.Rec.Image)
+                                                 asp-append-version="true" width="200px" height="150px" />
+                                        </a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="#">
+                                            @item.Rec.Name
+
+                                        </a>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p>$ @item.Rec.Price</p>
+                                    </td>
+
+                                    <td class="add-pr">
+                                        <a class="btn hvr-hover" asp-action="checkout" asp-route-id="@item.Rec.RecId">Buy Now</a>
+                                    </td>
+                                    <td class="remove-pr">
+                                        <a asp-action="deletelist" asp-route-id="@item.WishId" asp-controller="Home">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </td></tr>
+                                }
+
+                            
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row my-5">
+    <div class="col-lg-12">
+        <div class="title-all text-center">
+            <h1>Featured Recipes</h1>
+            <p>DisCover Our Featured Recipes From Differant Chef</p>
+        </div>
+        <div class="featured-products-box owl-carousel owl-theme">
+            @foreach (var item in ViewBag.recipe)
+            {
+                <div class="item">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <img src=@Url.Content("~/Images/" + item.Image)
+                                 asp-append-version="true" class=" d-block w-100" width="300px" height="250px" />
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a asp-action="ViewRecipes" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4>@item.Name</h4>
+                            <h5> $@item.Price</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+
+

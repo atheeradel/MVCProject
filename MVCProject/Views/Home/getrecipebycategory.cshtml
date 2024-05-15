@@ -117,9 +117,9 @@
                                                          asp-append-version="true" class=" img-fluid" style="width: 400px; height:250px" />
                                                     <div class="mask-icon">
                                                         <ul>
-                                                            <li><a asp-action="ViewRecipe" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                            <li><a asp-action="ViewRecipes" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
 
-                                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                            <li><a asp-action="Create" asp-route-id="@item.RecId" asp-controller="Wishlists" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
 
                                                     </div>
@@ -150,9 +150,9 @@
                                                              asp-append-version="true" class=" img-fluid" style="width: 400px; height:250px" />
                                                         <div class="mask-icon">
                                                             <ul>
-                                                                <li><a asp-action="ViewRecipe" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                                <li><a asp-action="ViewRecipes" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
 
-                                                                <li><a data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                                <li><a asp-action="Create" asp-route-id="@item.RecId" asp-controller="Wishlists" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                             </ul>
 
                                                         </div>

@@ -491,7 +491,42 @@ namespace MVCProject.Controllers
             return View(test);
         }
 
+        public IActionResult Addwishlist(int id)
+        {
+            var user = HttpContext.Session.GetInt32("UserId");
+            Wishlist list = new Wishlist();
+            list.UserId = user;
+            list.RecId = id;
 
+            _context.Add(list);
+            _context.SaveChanges();
+            
+           return RedirectToAction("UserIndex", "Home");
+        }
+
+        public IActionResult WhishIndex(int id)
+        {
+            var user = HttpContext.Session.GetInt32("UserId");
+            var modelContext = _context.Wishlists.Include(w => w.Rec).Include(w => w.User).Where(x => x.UserId == user).ToList();
+            ViewBag.recipe = _context.Recipes.Where(x => x.Status == 1).ToList();
+            return View(modelContext);
+        }
+        public IActionResult deletelist(int id)
+        {
+            var list = _context.Wishlists.Where(x => x.WishId == id).SingleOrDefault();
+            var user = HttpContext.Session.GetInt32("UserId");
+            
+            if (list != null)
+            {
+                _context.Remove(list);
+                _context.SaveChanges();
+                return RedirectToAction("UserIndex", "Home");
+            }
+            else
+            {
+                return Problem("Entity set 'ModelContext.Wishlists'  is null.");
+            }
+        }
 
 
 

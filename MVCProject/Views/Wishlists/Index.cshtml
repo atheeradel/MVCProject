@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MVCProject.Models.Wishlist>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Userlayout.cshtml";
+}
+
+<h3 class="mb-5 mt-5" style="text-align:center;">
+    My Wish List
+</h3>
+<div class="wishlist-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Recipe Name</th>
+                                <th>Unit Price </th>
+                                <th>Add Item</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach(var item in Model)
+                                {
+                                    <td class="thumbnail-img">
+                                    <a href="#">
+                                            <img src=@Url.Content("~/Images/" + item.Rec.Image)
+                                                 asp-append-version="true" width="200px" height="150px" />
+                                    </a>
+                                </td>
+                                <td class="name-pr">
+                                        <a href="#">
+                                            @item.Rec.Name
+                                     
+                                    </a>
+                                </td>
+                                <td class="price-pr">
+                                    <p>$ @item.Rec.Price</p>
+                                </td>
+                                
+                                <td class="add-pr">
+                                        <a class="btn hvr-hover" asp-action="checkout" asp-route-id="@item.Rec.RecId">Buy Now</a>
+                                </td>
+                                <td class="remove-pr">
+                                        <a asp-action="DeleteConfirmed" asp-route-id="@item.WishId">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                                }
+                                
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
