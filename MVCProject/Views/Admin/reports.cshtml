@@ -11,10 +11,10 @@
         @* <form asp-action="reports" asp-controller="Admin">
             <label><h5>Select Month</h5></label>
             <input type="month" name="month" class="form-control-sm m-2" />
-            @* <label><h5>Select Month</h5></label>
-            <input type="month" name="" class="form-control-sm m-2" /> *@
-           @*  <button class="btn btn-md  hvr-hover bg-gradient-primary" type="submit" >Search</button>
-        </form> *@
+            <label><h5>Select Month</h5></label>
+            <input type="month" name="" class="form-control-sm m-2" /> 
+             <button class="btn btn-md  hvr-hover bg-gradient-primary" type="submit" >Search</button>
+        </form>  *@
         <form asp-action="reports">
             <label><h5>start Date</h5></label>
             <input type="date" name="startDate" class="form-control-sm m-2" />
@@ -69,7 +69,7 @@
                 <tr>
                     <th>Total Sales:@ViewBag.TotalPrice</th>
                     <th>Total Profit:@ViewBag.Totalsales</th>
-                    <th>Tax paid monthly:20</th>
+                    <th>Tax paid monthly:$10</th>
                     <th>Net Profit:@ViewBag.netprofit</th>
                 </tr>
             </tfoot>

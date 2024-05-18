@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MVCProject.Models;
 using System.Net.Mail;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 
@@ -52,27 +53,50 @@ namespace MVCProject.Controllers
         public IActionResult contactus()
         {
             ViewBag.con = _context.Userinfos.Where(x => x.RoleId == 1).ToList();
-            ViewBag.ad = _context.Contactus.ToList();
+            ViewBag.ad = _context.Contactus.Where(x => x.ContId == 1).ToList();
             return View();
         }
         public IActionResult contactusChef()
         {
             ViewBag.Con = _context.Userinfos.Where(x => x.RoleId == 1).ToList();
-            ViewBag.ad = _context.Contactus.ToList();
+            ViewBag.ad = _context.Contactus.Where(x => x.ContId == 1).ToList();
             return View();
         }
 
         public IActionResult contactusGust()
         {
             ViewBag.Con = _context.Userinfos.Where(x => x.RoleId == 1).ToList();
-            ViewBag.ad = _context.Contactus.ToList();
+            ViewBag.ad = _context.Contactus.Where(x=>x.ContId==1).ToList();
             return View();
         }
+
+
+        
         public IActionResult Index()
         {
             ViewBag.category = _context.Categories.ToList();
             ViewBag.chef = _context.Userinfos.Where(x => x.RoleId == 2 && x.ImagePath != null).ToList();
             ViewBag.recipe = _context.Recipes.Where(x => x.Status == 1).ToList();
+            var phone = _context.Contactus.Where(x => x.ContId == 22).SingleOrDefault();
+            var addr=  _context.Contactus.Where(x => x.ContId == 21).SingleOrDefault();
+            var Email= _context.Contactus.Where(x => x.ContId == 23).SingleOrDefault();
+            ViewBag.phone = phone.Contactinfo;
+            ViewBag.email = Email.Contactinfo;
+            ViewBag.add = addr.Contactinfo;
+            var info = _context.Contactus.Where(x => x.ContId == 24).SingleOrDefault();
+            var infos= _context.Contactus.Where(x => x.ContId == 25).SingleOrDefault();
+            ViewBag.one = info.Contactusbannerimg;
+            ViewBag.two = info.Contactinfo;
+            ViewBag.three = infos.Contactusbannerimg;
+            ViewBag.about = _context.Aboutus.Where(x=>x.AboutId==1).ToList();
+            var home = _context.Homepages.Where(x => x.PageId == 1).SingleOrDefault();
+            ViewBag.img = _context.Homepages.ToList();
+            ViewBag.logo = home.Imglogo;
+            ViewBag.des = home.Bannerdescription;
+            var de= _context.Homepages.Where(x => x.PageId == 25).SingleOrDefault();
+            var dd=  _context.Homepages.Where(x => x.PageId == 26).SingleOrDefault();
+            ViewBag.rc = de.Imglogo;
+            ViewBag.cr = dd.Imglogo;
             return View();
         }
 
@@ -134,6 +158,7 @@ namespace MVCProject.Controllers
                         doc.Add(new Paragraph($"Your Recipe Ingredients: {r.Ingrediants}"));
                         doc.Add(new Paragraph($"   "));
                         doc.Add(new Paragraph($"Your Recipe Instructions: {r.Instruction}"));
+                        doc.Add(new Paragraph($"   "));
                         doc.Add(img2);
                         doc.Add(new Paragraph($"   "));
                         doc.Add(new Paragraph($" Dont Forget to share us your opinon for our recipes 😉  "));
@@ -143,7 +168,7 @@ namespace MVCProject.Controllers
 
                         // Store PDF in wwwroot
                         string wwwRootPath = _webHostEnvironment.WebRootPath;
-                        string pdfPath = Path.Combine(wwwRootPath, "pdfs", "generated.pdf");
+                        string pdfPath = Path.Combine(wwwRootPath, "pdfs", "Recipe.pdf");
 
                         using (var fileStream = new FileStream(pdfPath, FileMode.Create))
                         {
@@ -161,7 +186,7 @@ namespace MVCProject.Controllers
                     mail.From = new MailAddress("liliane79@ethereal.email");
                     mail.To.Add($"{record.Email}");
                     mail.Body = $"Thank You {record.Firstname} {record.Lastname} for your Purchase  your invoice is ${r.Price} and your recipe is by this attached Pdf File"; ;
-                    Attachment attachment = new Attachment("D:\\dirsttask\\MVCProject - Copy\\MVCProject\\wwwroot\\pdfs\\generated.pdf");
+                    Attachment attachment = new Attachment("D:\\dirsttask\\MVCProject - Copy\\MVCProject\\wwwroot\\pdfs\\Recipe.pdf");
                     mail.Attachments.Add(attachment);
                     SmtpServer.Send(mail);
                     TempData["message"] = "you are successfully checkout , Check your email to see your Recipe ";
@@ -171,16 +196,23 @@ namespace MVCProject.Controllers
 
                     break;
                 }
+                else
+                {
+                   
+                    TempData["message"] = "Your Checkout proccess failed there is a wrong with your card or your balance are not enoughe  , Try again  ";
+                    return View(r);
+                }
             }
-            return View(r);
+
+            return RedirectToAction("userorder");
         }
 
         public IActionResult userorder()
         {
             var id = HttpContext.Session.GetInt32("UserId");
             
-			var modelContext = _context.Userrecipes.Where(x => x.UserId == id).Include(u => u.Rec).Include(u => u.User);
-			return View( modelContext.ToList());
+			var modelContext = _context.Userrecipes.Where(x => x.UserId == id).Include(u => u.Rec).Include(u => u.User).ToList();
+			return View( modelContext);
 
 			
         }
@@ -352,6 +384,28 @@ namespace MVCProject.Controllers
             ViewBag.chef=_context.Userinfos.Where(x=>x.RoleId==2 && x.ImagePath !=null).ToList();
             ViewBag.recipe=_context.Recipes.Where(x=>x.Status==1).ToList();
 
+            var phone = _context.Contactus.Where(x => x.ContId == 22).SingleOrDefault();
+            var addr = _context.Contactus.Where(x => x.ContId == 21).SingleOrDefault();
+            var Email = _context.Contactus.Where(x => x.ContId == 23).SingleOrDefault();
+            ViewBag.phone = phone.Contactinfo;
+            ViewBag.email = Email.Contactinfo;
+            ViewBag.add = addr.Contactinfo;
+            var info = _context.Contactus.Where(x => x.ContId == 24).SingleOrDefault();
+            var infos = _context.Contactus.Where(x => x.ContId == 25).SingleOrDefault();
+            ViewBag.one = info.Contactusbannerimg;
+            ViewBag.two = info.Contactinfo;
+            ViewBag.three = infos.Contactusbannerimg;
+            ViewBag.about = _context.Aboutus.Where(x => x.AboutId == 1).ToList();
+            var home = _context.Homepages.Where(x => x.PageId == 1).SingleOrDefault();
+            ViewBag.img = _context.Homepages.ToList();
+            ViewBag.logo = home.Imglogo;
+            ViewBag.des = home.Bannerdescription;
+            var de = _context.Homepages.Where(x => x.PageId == 25).SingleOrDefault();
+            var dd = _context.Homepages.Where(x => x.PageId == 26).SingleOrDefault();
+            ViewBag.rc = de.Imglogo;
+            ViewBag.cr = dd.Imglogo;
+           
+
             return View(user);
         }
         public IActionResult ChefIndex()
@@ -362,6 +416,29 @@ namespace MVCProject.Controllers
             ViewBag.category = _context.Categories.ToList();
             ViewBag.chef = _context.Userinfos.Where(x => x.RoleId == 2 && x.ImagePath != null).ToList();
             ViewBag.recipe = _context.Recipes.Where(x => x.Status == 1).ToList();
+
+            var phone = _context.Contactus.Where(x => x.ContId == 22).SingleOrDefault();
+            var addr = _context.Contactus.Where(x => x.ContId == 21).SingleOrDefault();
+            var Email = _context.Contactus.Where(x => x.ContId == 23).SingleOrDefault();
+            ViewBag.phone = phone.Contactinfo;
+            ViewBag.email = Email.Contactinfo;
+            ViewBag.add = addr.Contactinfo;
+            var info = _context.Contactus.Where(x => x.ContId == 24).SingleOrDefault();
+            var infos = _context.Contactus.Where(x => x.ContId == 25).SingleOrDefault();
+            ViewBag.one = info.Contactusbannerimg;
+            ViewBag.two = info.Contactinfo;
+            ViewBag.three = infos.Contactusbannerimg;
+            ViewBag.about = _context.Aboutus.Where(x => x.AboutId == 1).ToList();
+            var home = _context.Homepages.Where(x => x.PageId == 1).SingleOrDefault();
+            ViewBag.img = _context.Homepages.ToList();
+            ViewBag.logo = home.Imglogo;
+            ViewBag.des = home.Bannerdescription;
+            var de = _context.Homepages.Where(x => x.PageId == 25).SingleOrDefault();
+            var dd = _context.Homepages.Where(x => x.PageId == 26).SingleOrDefault();
+            ViewBag.rc = de.Imglogo;
+            ViewBag.cr = dd.Imglogo;
+           
+
             return View(user);
             
         }
@@ -501,10 +578,10 @@ namespace MVCProject.Controllers
             _context.Add(list);
             _context.SaveChanges();
             
-           return RedirectToAction("UserIndex", "Home");
+           return RedirectToAction("WhishIndex");
         }
 
-        public IActionResult WhishIndex(int id)
+        public IActionResult WhishIndex()
         {
             var user = HttpContext.Session.GetInt32("UserId");
             var modelContext = _context.Wishlists.Include(w => w.Rec).Include(w => w.User).Where(x => x.UserId == user).ToList();
@@ -520,7 +597,7 @@ namespace MVCProject.Controllers
             {
                 _context.Remove(list);
                 _context.SaveChanges();
-                return RedirectToAction("UserIndex", "Home");
+                return RedirectToAction("WhishIndex");
             }
             else
             {
@@ -621,7 +698,15 @@ namespace MVCProject.Controllers
             }
             return View(user);
         }
+        public IActionResult privacypolicyGust()
+        {
+            return View();
+        }
 
+        public IActionResult termsGust()
+        {
+            return View();
+        }
 
         private bool UserinfoExists(decimal userId)
         {

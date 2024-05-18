@@ -2,6 +2,14 @@
 @{
 	Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
+@if (TempData["message"] != null)
+{
+	<script src="/lib/jquery//dist/jquery.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script type="text/javascript">
+		toastr.success('@TempData["message"]');
+	</script>
+}
 <h1 style="text-align:center" class="m-4">My orders </h1>
 <div class="row my-5">
 	<div class="card card-outline-secondary my-4 m-4">

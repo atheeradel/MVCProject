@@ -1,0 +1,99 @@
+﻿@model IEnumerable<MVCProject.Models.Homepage>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+<h1 style="font-family:'Times New Roman'">Home Pages</h1>
+
+<p>
+            <a asp-action="Create" class="  btn btn-sm hvr-hover bg-gradient-primary">Create New</a>
+</p>
+<table class="table" id="example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Phonenum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imglogo)
+            </th>
+           @*  <th>
+                @Html.DisplayNameFor(model => model.Imgbannerone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imgbannertwo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imgbannerthree)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Bannerdescription)
+            </th>
+          @*   <th>
+                @Html.DisplayNameFor(model => model.Imgonedesign)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imgtwodesign)
+            </th> *@
+            <th> Control</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phonenum)
+            </td>
+            <td>
+                            <img src=@Url.Content("~/img/" + @item.Imglogo)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+            </td>
+         @*    <td>
+                             <img src=@Url.Content("~/Images/" + @item.Imgbannerone)
+                                                                                  asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+            </td>
+            <td>
+                
+                            <img src=@Url.Content("~/img/" + @item.Imgbannertwo)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+            </td>
+            <td>
+                
+                            <img src=@Url.Content("~/img/" + @item.Imgbannerthree)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+            </td> *@
+            <td>
+                @Html.DisplayFor(modelItem => item.Bannerdescription)
+            </td>
+           @*  <td>
+              
+                            <img src=@Url.Content("~/img/" + @item.Imgonedesign)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+            </td>
+            <td>
+               
+                            <img src=@Url.Content("~/img/" + @item.Imgtwodesign)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+            </td> *@
+            <td>
+                            <a asp-action="Edit" asp-route-id="@item.PageId" class="btn btn-sm hvr-hover bg-gradient-primary">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.PageId" class="btn btn-sm hvr-hover bg-gradient-primary">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.PageId" class="btn btn-sm hvr-hover bg-gradient-primary">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+        <div />
+            <div />

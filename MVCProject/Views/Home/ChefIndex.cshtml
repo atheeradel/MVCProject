@@ -1,6 +1,6 @@
 ﻿@model Userinfo
 @{
-    Layout = "~/Views/Shared/_ChefIayout.cshtml";
+    Layout = "~/Views/Shared/_Homeindex.cshtml";
 }
 @if (TempData["message"] != null)
 {
@@ -10,6 +10,59 @@
         toastr.success('@TempData["message"]');
     </script>
 }
+<div class="main-top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="custom-select-box">
+                    <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+
+                        <option>$ USD</option>
+
+                    </select>
+                </div>
+                <div class="right-phone-box">
+                    <p>Call US :- <a href="#"> @ViewBag.phone</a></p>
+                </div>
+                <div class="our-link">
+                    <ul>
+                        <li><a asp-action="ChefProfile" asp-controller="Home"><i class="fa fa-user s_color"></i> My Account</a></li>
+
+                        <li><a asp-action="contactusChef" asp-controller="Home"><i class="fas fa-headset"></i> Contact Us</a></li>
+                        <li><a asp-action="ChefIndex" asp-controller="Home"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Home</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="login-box">
+                    <div class="login-box">
+
+                        <a asp-action="logout" asp-controller="Home" class="btn hvr-hover" style="color:white">LOG-OUT</a>
+                    </div>
+
+
+                </div>
+                <div class="text-slid-box">
+                    <div id="offer-box" class="carouselTicker">
+                        <ul class="offer-box">
+                            <li>
+                                <i class="fab fa-opencart"></i>@ViewBag.one
+                            </li>
+                            <li>
+                                <i class="fab fa-opencart"></i>@ViewBag.two
+                            </li>
+
+                            <li>
+                                <i class="fab fa-opencart"></i>@ViewBag.three
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <header class="main-header">
     <!-- Start Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
@@ -19,7 +72,8 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <img src="~/Home/images/Recipe-removebg-preview.png" class="logo" width="230px" height="160px" alt="">
+                <img src=@Url.Content("~/img/" + @ViewBag.logo)
+                     asp-append-version="true" class="logo" width="230px" height="160px" alt="" />
             </div>
             <!-- End Header Navigation -->
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -66,42 +120,27 @@
 
 <div id="slides-shop" class="cover-slides">
     <ul class="slides-container">
-        <li class="text-center">
-            <img src="~/Home/images/preparing-salad-female-chef-cutting-fresh-vegetables-cooking-process-selective-focus.jpg" alt="">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="m-b-20"><strong>Welcome To <br> Master Chef Recipe</strong></h1>
-                        <p class="m-b-40">Discover our recipe for differant chef <br> around all the world </p>
-                        <p><a class="btn hvr-hover" href="#">Discover Now </a></p>
+        @foreach (var item in @ViewBag.img)
+        {
+            if (@item.PageId == 9 || @item.PageId == 14 || @item.PageId == 23)
+            {
+                <li class="text-center">
+                    <img src=@Url.Content("~/img/" + @item.Imglogo)
+                         asp-append-version="true" width="230px" height="160px" alt="" />
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="m-b-20"><strong>@ViewBag.des</strong></h1>
+                                <p class="m-b-40">Discover our recipe for differant chef <br> around all the world </p>
+                                <p><a class="btn hvr-hover" href="#">Discover Now </a></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </li>
-        <li class="text-center">
-            <img src="~/Home/images/sweet-potato-falafel-recipe-idea-vegan.jpg" alt="">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="m-b-20"><strong>Welcome To <br> Master Chef Recipe</strong></h1>
-                        <p class="m-b-40">Discover our recipe for differant chef <br> around all the world </p>
-                        <p><a class="btn hvr-hover" href="#">Discover Now </a></p>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="text-center">
-            <img src="~/Home/images/chef-plating-cooking.jpg" alt="">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="m-b-20"><strong>Welcome To <br> Master Chef Recipe</strong></h1>
-                        <p class="m-b-40">Discover our recipe for differant chef <br> around all the world </p>
-                        <p><a class="btn hvr-hover" href="#">Discover Now </a></p>
-                    </div>
-                </div>
-            </div>
-        </li>
+                </li>
+            }
+        }
+
+
     </ul>
     <div class="slides-navigation">
         <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
@@ -120,7 +159,7 @@ center; margin:30px">
             @foreach (var item in ViewBag.category)
             {
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
+                    <div class="shop-cat-box" data-aos="fade-right">
                         <img class="img-fluid " src=@Url.Content("~/Images/" + @item.CatImg)
                              asp-append-version="true" class=" img-fluid" style="width: 400px; height:200px" />
 
@@ -139,14 +178,16 @@ center; margin:30px">
 <div class="box-add-products">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12" data-aos="fade-up-right">
                 <div class="offer-box-products">
-                    <img class="img-fluid" src="~/Home/images/With Our Creative Chef.png" alt="" />
+                    <img src=@Url.Content("~/img/" + @ViewBag.rc)
+                         asp-append-version="true" class="img-fluid" width="600px" height="500px" alt="" />
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12" data-aos="fade-up-left">
                 <div class="offer-box-products">
-                    <img class="img-fluid" src="~/Home/images/With Our Creative recipe.png" alt="" />
+                    <img src=@Url.Content("~/img/" + @ViewBag.cr)
+                         asp-append-version="true" class="img-fluid" width="600px" height="500px" alt="" />
                 </div>
             </div>
         </div>
@@ -178,7 +219,7 @@ center; margin:30px">
         <div class="row special-list">
             @foreach (var item in ViewBag.recipe)
             {
-                <div class="col-lg-3 col-md-6 special-grid top-featured">
+                <div class="col-lg-3 col-md-6 special-grid top-featured" data-aos="flip-left" data-aos-duration="10000">
                     <div class="products-single fix">
                         <div class="box-img-hover">
                             <div class="type-lb">
@@ -219,7 +260,9 @@ center; margin:30px">
 
         <div class="col-sm-6 col-lg-3">
             <div class="hover-team">
-                <div class="our-team">
+                <div class="our-team" data-aos="fade-down"
+                     data-aos-easing="linear"
+                     data-aos-duration="1500">
                     <img src=@Url.Content("~/Images/" + @item.ImagePath)
                          asp-append-version="true" img-fluid" style="width: 400px; height:400px" />
                     <div class="team-content">
@@ -246,87 +289,124 @@ center; margin:30px">
 <!--End of chef section-->
 <!-- Start Instagram Feed--> <div class="instagram-box">
     <div class="main-instagram owl-carousel owl-theme">
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-01.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+        @foreach (var item in ViewBag.category)
+        {
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img class="img-fluid " src=@Url.Content("~/Images/" + @item.CatImg)
+                         asp-append-version="true" class="img-fluid" style="width: 400px; height:200px;" />
+
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/kvp_911?igsh=MTR6N2Vpa3I3MW0ycg%3D%3D&utm_source=qr"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-02.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+        }
+
+
+    </div>
+</div>
+<footer>
+    <div class="footer-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <img src=@Url.Content("~/img/" + @ViewBag.logo)
+                             asp-append-version="true" class="logo" width="230px" height="160px" alt="" />
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>SubScribe to email Service</h3>
+                        <form class="newsletter-box">
+                            <div class="form-group">
+                                <input class="" type="email" name="Email" placeholder="Email Address*" />
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <button class="btn hvr-hover" type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>Social Media Accounts</h3>
+                        <p></p>
+                        <ul>
+                            <li><a href="https://www.facebook.com/profile.php?id=61559611088226&mibextid=AEUHqQ"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="https://twitter.com/atheeradel07"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="https://www.instagram.com/kvp_911?igsh=MTR6N2Vpa3I3MW0ycg%3D%3D&utm_source=qr"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+
+
+                            <li><a href="https://www.pinterest.com/ronnaca/masterchef/"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-03.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+            <hr>
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-widget">
+                        <h4>About MasterChef</h4>
+                        @foreach (var item in @ViewBag.about)
+                        {
+                            <p>
+                                @item.Aboutusdescription
+                                @item.Trustedinfo
+                                @item.Profinfo
+                                @item.Expertinfo
+                            </p>
+                        }
+
+
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-04.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link">
+                        <h4>Information</h4>
+                        <ul>
+                            <li><a asp-action="aboutuschef" asp-controller="Home">About Us</a></li>
+
+
+                            <li><a asp-action="termsGust" asp-controller="Home">Terms &amp; Conditions</a></li>
+                            <li><a asp-action="privacypolicyGust" asp-controller="Home">Privacy Policy</a></li>
+
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-05.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-06.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-07.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-08.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-09.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="~/Home/images/instagram-img-05.jpg" alt="" />
-                <div class="hov-in">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link-contact">
+                        <h4>Contact Us</h4>
+                        <ul>
+
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>Address: @ViewBag.add  </p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:@ViewBag.phone">@ViewBag.phone</a></p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-envelope"></i>Email: <a href="mailto:@ViewBag.email">@ViewBag.email</a></p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</footer>
+<!-- End Footer  -->
+<!-- Start copyright  -->
+<div class="footer-copyright" style="text-align:center">
+    All Rights Reserved. &copy; 2024 <a href="#" style="color:white">MasterChef</a> Design By :
+    <a href="https://html.design/" style="color:white">Atheer Adel</a>
 </div>
+<!-- End copyright  -->
+
+<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+<!-- End Instagram Feed  -->
+<!-- End Instagram Feed  -->
 
 <!-- End Instagram Feed  -->

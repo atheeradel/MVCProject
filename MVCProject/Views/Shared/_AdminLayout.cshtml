@@ -1,11 +1,12 @@
-﻿@* @inject HttpContextAccessor accessor; *@
+﻿@using Microsoft.AspNetCore.Http
+ @inject IHttpContextAccessor accessor; 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>MasterChef Admin</title>
+    <title>Admin of MasterChef</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="~/Admin/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="~/Admin/assets/vendors/ti-icons/css/themify-icons.css">
@@ -37,7 +38,7 @@
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-menu"></span>
                 </button>
-                <div class="search-field d-none d-md-block">
+                @* <div class="search-field d-none d-md-block">
                     <form class="d-flex align-items-center h-100" action="#">
                         <div class="input-group">
                             <div class="input-group-prepend bg-transparent">
@@ -46,12 +47,14 @@
                             <input type="text" class="form-control bg-transparent border-0" placeholder="Search ">
                         </div>
                     </form>
-                </div>
+                </div> *@
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="nav-profile-img">
-                                <img src="~/Images/728b9235-7d2c-4e40-ad19-5e45c044bedc_cheflogo.png" alt="profile" />
+                                <img src=@Url.Content("~/Images/" +@accessor.HttpContext.Session.GetString("adminphoto") )
+                                     asp-append-version="true"
+                                     class=" img-fluid" style="width: 250px;" />
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
@@ -90,7 +93,9 @@
                     <li class="nav-item nav-profile">
                         <a href="#" class="nav-link">
                             <div class="nav-profile-image">
-                                <img src="~/Images/728b9235-7d2c-4e40-ad19-5e45c044bedc_cheflogo.png" alt="profile" />
+                                <img src=@Url.Content("~/Images/" +@accessor.HttpContext.Session.GetString("adminphoto") )
+                                     asp-append-version="true"
+                                     class=" img-fluid" style="width: 250px;" />
 
 
                                 <span class="login-status online"></span>
@@ -99,7 +104,7 @@
                            
                             <div class="nav-profile-text d-flex flex-column">
                                 <span class="font-weight-bold mb-2"></span>
-                                <span class="text-secondary text-small">MasterChef Admin</span>
+                                <span class="text-secondary text-small"> @accessor.HttpContext.Session.GetString("adminFname")@accessor.HttpContext.Session.GetString("adminLname")Admin</span>
                             </div>
                             <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                         </a>
@@ -176,7 +181,7 @@
                                     <a class="nav-link" asp-action="Index" asp-controller="Aboutus" > About Us page </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" > Home Page </a>
+                                    <a class="nav-link" asp-action="Index" asp-controller="Homepages"> Home Page </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" asp-action="Index" asp-controller="Contactus" > Contact Us Page </a>

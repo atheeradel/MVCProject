@@ -31,64 +31,51 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
 
 </head>
 
 <body>
-    <!-- Start Main Top -->
     <div class="main-top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="custom-select-box">
                         <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-                            
+
                             <option>$ USD</option>
-                            
+
                         </select>
                     </div>
-                    
+
                     <div class="our-link">
                         <ul>
                             <!--<li><a href="#"><i class="fa fa-user s_color"></i> My Account</a></li>-->
 
-                            <li><a asp-action="contactusGust" asp-controller="Home"><i class="fas fa-headset"></i> Contact Us</a></li>
+                            
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="login-box">
-                        <div class="login-box">
-                            <a asp-action="login" asp-controller="loginreg" class="btn hvr-hover" style="color:white">Log</a>
-                            <a asp-action="register" asp-controller="loginreg" class="btn hvr-hover" style="color:white">signup</a>
-                        </div>
-                        
+                   
 
-                    </div>
-                    
                 </div>
             </div>
         </div>
     </div>
     <!-- End Main Top -->
-    <!-- Start Main Top -->
-  
-    <!-- End Main Top -->
-   
-    @RenderBody()
-    <!-- Start Footer  -->
+        @RenderBody()
     <footer>
         <div class="footer-main">
             <div class="container">
-				<div class="row">
+                <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link">
                             <h4>Information</h4>
                             <ul>
-                                <li><a asp-action="Aboutus" asp-controller="Home">About Us</a></li>
+                               
 
 
                                 <li><a asp-action="termsGust" asp-controller="Home">Terms &amp; Conditions</a></li>
@@ -97,41 +84,40 @@
                             </ul>
                         </div>
                     </div>
-					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-top-box">
-							<h3>SubScribe to email Service</h3>
-							<form class="newsletter-box">
-								<div class="form-group">
-									<input class="" type="email" name="Email" placeholder="Email Address*" />
-									<i class="fa fa-envelope"></i>
-								</div>
-								<button class="btn hvr-hover" type="submit">Subscribe</button>
-							</form>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-top-box">
-							<h3>Social Media Accounts</h3>
-							<p></p>
-							<ul>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-top-box">
+                            <h3>SubScribe to email Service</h3>
+                            <form class="newsletter-box">
+                                <div class="form-group">
+                                    <input class="" type="email" name="Email" placeholder="Email Address*" />
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <button class="btn hvr-hover" type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-top-box">
+                            <h3>Social Media Accounts</h3>
+                            <p></p>
+                            <ul>
                                 <li><a href="https://www.facebook.com/profile.php?id=61559611088226&mibextid=AEUHqQ"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                                 <li><a href="https://twitter.com/atheeradel07"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
                                 <li><a href="https://www.instagram.com/kvp_911?igsh=MTR6N2Vpa3I3MW0ycg%3D%3D&utm_source=qr"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
-                                
-                                
+
+
                                 <li><a href="https://www.pinterest.com/ronnaca/masterchef/"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                               
+
                             </ul>
-						</div>
-					</div>
-				</div>
-				<hr>
-              
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
             </div>
         </div>
     </footer>
     <!-- End Footer  -->
-
     <!-- Start copyright  -->
     <div class="footer-copyright" style="text-align:center">
         All Rights Reserved. &copy; 2024 <a href="#" style="color:white">MasterChef</a> Design By :

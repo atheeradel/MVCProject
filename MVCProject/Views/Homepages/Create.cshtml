@@ -1,0 +1,70 @@
+﻿@model MVCProject.Models.Homepage
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+<h1>Create</h1>
+
+<h4>Homepage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+                <form asp-action="Create" asp-controller="Homepages" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Phonenum" class="control-label"></label>
+                <input asp-for="Phonenum" class="form-control" />
+                <span asp-validation-for="Phonenum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                        <label asp-for="ImageFile" class="control-label"></label>
+                        <input asp-for="ImageFile" class="form-control" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+           @*  <div class="form-group">
+                        <label asp-for="ImageFile1" class="control-label"></label>
+                        <input asp-for="ImageFile1" class="form-control" />
+                        <span asp-validation-for="ImageFile1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                        <label asp-for="ImageFile2" class="control-label"></label>
+                        <input asp-for="ImageFile2" class="form-control" />
+                <span asp-validation-for="ImageFile2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                        <label asp-for="ImageFile3" class="control-label"></label>
+                <input asp-for="ImageFile3" class="form-control" />
+                <span asp-validation-for="ImageFile3" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="Bannerdescription" class="control-label"></label>
+                <input asp-for="Bannerdescription" class="form-control" />
+                <span asp-validation-for="Bannerdescription" class="text-danger"></span>
+            </div>
+           @*  <div class="form-group">
+                        <label asp-for="ImageFile4" class="control-label"></label>
+                        <input asp-for="ImageFile4" class="form-control" />
+                        <span asp-validation-for="ImageFile4" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                        <label asp-for="ImageFile5" class="control-label"></label>
+                        <input asp-for="ImageFile5" class="form-control" />
+                        <span asp-validation-for="ImageFile5" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+            <a asp-action="Index" class=" btn btn-sm bg-gradient-primary">Back to List</a>
+</div>
+</div></div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

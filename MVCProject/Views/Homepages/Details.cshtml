@@ -1,0 +1,83 @@
+﻿@model MVCProject.Models.Homepage
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+        <h1>Details</h1>
+
+        <div>
+            <h4>Home Page</h4>
+            <hr />
+            <div class="card mb-3">
+
+                <div class="card-body">
+                    <h5 class="card-title"> Details of Home page </h5>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Phonenum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Phonenum)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imglogo)
+        </dt>
+        <dd class = "col-sm-10">
+                            <img src=@Url.Content("~/img/" + Model.Imglogo)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+        </dd>
+    @*     <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imgbannerone)
+        </dt>
+        <dd class = "col-sm-10">
+                            <img src=@Url.Content("~/img/" + Model.Imgbannerone)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imgbannertwo)
+        </dt>
+        <dd class = "col-sm-10">
+                            <img src=@Url.Content("~/img/" + Model.Imgbannertwo)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imgbannerthree)
+        </dt>
+        <dd class = "col-sm-10">
+                            <img src=@Url.Content("~/img/" + Model.Imgbannerthree)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+                        </dd> *@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bannerdescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bannerdescription)
+        </dd>
+       @*  <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imgonedesign)
+        </dt>
+        <dd class = "col-sm-10">
+                            <img src=@Url.Content("~/img/" + Model.Imgonedesign)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imgtwodesign)
+        </dt>
+        <dd class = "col-sm-10">
+                            <img src=@Url.Content("~/img/" + Model.Imgtwodesign)
+                                 asp-append-version="true" style="border-radius:20%;" width="300px" height="200px" />
+        </dd> *@
+    </dl>
+</div>
+<div>
+
+                    <a asp-action="Edit" asp-route-id="@Model?.PageId" class=" btn btn-sm bg-gradient-primary">Edit</a> |
+                    <a asp-action="Index" class=" btn btn-sm bg-gradient-primary">Back to List</a>
+</div>
+            </div>
+        </div>
+
+        </div></div>

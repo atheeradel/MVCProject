@@ -4,6 +4,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_ChefIayout.cshtml";
 }
+<div class="main-panel">
+    <div class="content-wrapper">
 <h1 class="mb-5 mt-5">
     <a asp-action="Create" class=" btn hvr-hover m-1 " style="color:white">Create New Recipe</a>
 </h1>
@@ -88,9 +90,9 @@
                                     </td>
 
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.RecId">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.RecId">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.RecId">Delete</a>
+                                                <a asp-action="Edit" asp-route-id="@item.RecId" class="btn btn-sm hvr-hover bg-gradient-primary">Edit</a> |
+                                                <a asp-action="Details" asp-route-id="@item.RecId" class="btn btn-sm hvr-hover bg-gradient-primary">Details</a> |
+                                                <a asp-action="Delete" asp-route-id="@item.RecId" class="btn btn-sm hvr-hover bg-gradient-primary">Delete</a>
                                     </td>
                                 </tr>
                             }
@@ -102,6 +104,6 @@
     </div>
 </div>
 
-
+</div></div>
 
 

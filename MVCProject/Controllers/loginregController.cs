@@ -30,7 +30,8 @@ namespace MVCProject.Controllers
         {
             var user = await _context.Logins.
                 Where(x => x.Username == userlogin.Username && x.Password == userlogin.Password).SingleOrDefaultAsync();
-
+            
+            
             if (user == null)
             {
                 TempData["message"] = "Your Password Or User Name Are Not Crroect Try Again!";
@@ -44,6 +45,9 @@ namespace MVCProject.Controllers
                 {
                     case 1:
                         HttpContext.Session.SetInt32("AdminId", (int)user.UserId);
+                        HttpContext.Session.SetString("adminFname", (string)user2.Firstname);
+                        HttpContext.Session.SetString("adminLname", (string)user2.Lastname);
+                        HttpContext.Session.SetString("adminphoto", (string)user2.ImagePath);
                         return RedirectToAction("Index", "Admin");
 
                     case 2:
