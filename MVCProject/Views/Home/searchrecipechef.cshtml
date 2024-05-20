@@ -61,7 +61,7 @@
             <div class="col-lg-12">
                 <h2>Recipe</h2>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="ChefIndex">Home</a></li>
                     <li class="breadcrumb-item active">Recipe</li>
                 </ul>
             </div>
@@ -78,14 +78,19 @@
                     <div class="product-item-filter row">
                         <div class="col-12 col-sm-8 text-center text-sm-left">
                             <div class="toolbar-sorter-right">
-                                <span>Sort by </span>
-                                <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                                <span>Choose Filter </span>
+                                <form asp-action="searchrecipechef" asp-controller="Home">
+                                    <select id="basic" class="selectpicker show-tick form-control" name="i" data-placeholder="$ USD">
 
 
-                                    <option value="2">High Price → High Price</option>
-                                    <option value="3">Low Price → High Price</option>
-                                    <option value="4">Best Selling</option>
-                                </select>
+                                        <option value="2">High Price → Low Price</option>
+                                        <option value="3">Low Price → High Price</option>
+                                        <option value="4">Selling Recipe</option>
+                                        <option value="5"> Preferred Recipe</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm hvr-hover" style="color:white">Filter</button>
+
+                                </form>
                             </div>
 
                         </div>

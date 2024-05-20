@@ -83,6 +83,32 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-7 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <h4 class="card-title float-start"> Orders and  Recipes    </h4>
+                            <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-end"></div>
+                        </div>
+                        <canvas id="orderandrecipe" style="max-width:400px; max-height:430px"></canvas>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <h4 class="card-title float-start"> Number OF Users AND Chef    </h4>
+                            <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-end"></div>
+                        </div>
+                        <canvas id="userandchef" style="max-width:400px; max-height:430px"></canvas>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
@@ -238,6 +264,7 @@
             </div>
         </div>
     </div></div>
+    
 <script>
     // Access chart data passed from controller
     var totalSales = @Html.Raw(Json.Serialize(@ViewBag.totalSales));
@@ -349,4 +376,82 @@
     });
 </script>
     <!-- content-wrapper ends -->
+<script>
+    // Access chart data passed from controller
     
+    var Orders = @Html.Raw(Json.Serialize(@ViewBag.order));
+    var Recipes = @Html.Raw(Json.Serialize(@ViewBag.recipenum));
+    var AcceptedRecipes = @Html.Raw(Json.Serialize(@ViewBag.recipenumaccept));
+    var RejectedRecipes = @Html.Raw(Json.Serialize(@ViewBag.recipenumreject));
+    // Create chart
+    var ctx = document.getElementById('orderandrecipe').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Number Of Orders ', ' Number of All Added Recipes', ' Number of all Accepted Recipes','Number of All Rejected Recipes'],
+            datasets: [{
+                label: 'Sales Overview',
+                data: [@ViewBag.order, @ViewBag.recipenum, @ViewBag.recipenumaccept, @ViewBag.recipenumreject],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgb(255, 205, 86,1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgb(255, 205, 86,1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<script>
+    // Access chart data passed from controller
+
+    var users = @Html.Raw(Json.Serialize(@ViewBag.usernum));
+    var chef = @Html.Raw(Json.Serialize(@ViewBag.chefnum));
+   
+    // Create chart
+    var ctx = document.getElementById('userandchef').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Number Of MasterChef Users ', ' Number of MasterChef Chef'],
+            datasets: [{
+                label: 'Sales Overview',
+                data: [@ViewBag.chefnum, @ViewBag.usernum],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                   
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(153, 102, 255, 0.2)',
+                   
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

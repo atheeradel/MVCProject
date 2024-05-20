@@ -17,18 +17,18 @@
 <h1>Index</h1>
 
 <p>
-            <a asp-action="Create" class=" btn btn-sm bg-gradient-primary" >Create New</a>
-</p>
+          @*   <a asp-action="Create" class=" btn btn-sm bg-gradient-primary" >Create New</a>
+</p> *@
 <table class="table" id="example">
     <thead>
         <tr>
             <th>
                 Contact Us Title
             </th>
-            <th>
+        @*     <th>
                 @Html.DisplayNameFor(model => model.Contactinfo)
-            </th>
-            <th></th>
+            </th> *@
+            <th> Control</th>
         </tr>
     </thead>
     <tbody>
@@ -37,13 +37,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Contactusbannerimg)
             </td>
-            <td>
+          @*   <td>
                 @Html.DisplayFor(modelItem => item.Contactinfo)
-            </td>
+            </td> *@
             <td>
-                            <a asp-action="Edit" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Edit</a> |<br /><br />
-                            <a asp-action="Details" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Details</a> |<br /><br />
-                            <a asp-action="Delete" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Delete</a><br />
+                            <a asp-action="Edit" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Details</a> 
+                           @*  <a asp-action="Delete" asp-route-id="@item.ContId" class=" btn btn-sm bg-gradient-primary" >Delete</a><br /> *@
             </td>
         </tr>
 }

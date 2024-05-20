@@ -87,7 +87,7 @@
                     <li class="nav-item active"><a class="nav-link" asp-action="Index">Home</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="Aboutus" asp-controller="Home">About Us</a></li>
 
-                    <li class="nav-item"><a class="nav-link" asp-action="searchrecipegust" asp-controller="Home">Recipes</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="searchrecipegust" asp-controller="Home" >Recipes</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="contactusGust" asp-controller="Home">Contact Us</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="testGust">Our Testimonal</a></li>
                 </ul>
@@ -116,7 +116,7 @@
                     <div class="col-md-12">
                         <h1 class="m-b-20"><strong>@ViewBag.des</strong></h1>
                         <p class="m-b-40">Discover our recipe for differant chef <br> around all the world </p>
-                        <p><a class="btn hvr-hover" href="#">Discover Now </a></p>
+                                <p><a class="btn hvr-hover" asp-action="searchrecipegust" asp-controller="Home">Discover Now </a></p>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@
                         <img class="img-fluid " src=@Url.Content("~/Images/" + @item.CatImg)
                              asp-append-version="true" class=" img-fluid" style="width: 400px; height:200px" />
 
-                        <a class="btn hvr-hover" href="#">@item.CatName recipe </a>
+                        <a class="btn hvr-hover" asp-action="getrecipebycategorygust" asp-route-id="@item.CatId">@item.CatName recipe </a>
                 </div>
             </div>
             }
@@ -189,9 +189,9 @@
             <div class="col-lg-12">
                 <div class="special-menu text-center">
                     <div class="button-group filter-button-group">
-                        <button class="active" data-filter="*">All</button>
-                        <button data-filter=".top-featured">Top featured</button>
-                        <button data-filter=".best-seller">Best seller</button>
+                        <button class="active" data-filter="*">Show Recipe</button>
+                       
+                        <button data-filter=".best-seller">Hide Recipe</button>
                     </div>
                 </div>
             </div>
@@ -210,9 +210,9 @@
                                  asp-append-version="true" class=" img-fluid" style="width: 400px; height:250px" />
                             <div class="mask-icon">
                                 <ul>
-                                    <li><a asp-action="ViewRecipes" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a asp-action="login" asp-controller="loginreg" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
 
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                    <li><a asp-action="login" asp-controller="loginreg" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                 </ul>
 
                             </div>
@@ -220,6 +220,8 @@
                         <div class="why-text">
                             <h4>@item.Name</h4>
                             <h5> $@item.Price</h5>
+                            <br /><br />
+                            <a asp-action="login" asp-controller="loginreg" class="ml-auto btn hvr-hover" type="submit" style="color:white" data-toggle="tooltip" data-placement="right">Buy Recipe</a>
                         </div>
                     </div>
                 </div>
@@ -253,8 +255,9 @@
                     </div>
                     <ul class="social">
                         <li>
+                        <li><a asp-action="login" asp-controller="loginreg" data-toggle="tooltip" data-placement="right" title="View Chef Recipe"><i class="fa fa-plus"></i></a></li>
 
-                            <a asp-route-id="@item.UserId" asp-action="getrecipebychef" class="fa fa-plus"></a>
+                            
                         </li>
 
                     </ul>
@@ -282,7 +285,7 @@
                              asp-append-version="true" class="img-fluid" style="width: 400px; height:200px;" />
 
                         <div class="hov-in">
-                            <a href="https://www.instagram.com/kvp_911?igsh=MTR6N2Vpa3I3MW0ycg%3D%3D&utm_source=qr"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/kvp_911?igsh=MTR6N2Vpa3I3MW0ycg%3D%3D&utm_source=qr"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>

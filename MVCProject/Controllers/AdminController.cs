@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCProject.Models;
-
+using System.Net;
+using System.Net.Mail;
+using System.Reflection;
+using System.Reflection.Metadata;
 namespace MVCProject.Controllers
 
 {
@@ -164,7 +167,8 @@ namespace MVCProject.Controllers
                 return View(result);
             }
         }
-    
+
+       
         public IActionResult reports()
         {
             var modelContext = _context.Userrecipes.Include(u => u.Rec).Include(u => u.User);
@@ -174,58 +178,69 @@ namespace MVCProject.Controllers
             return View( modelContext.ToList());
         }
         [HttpPost]
-        public IActionResult reports(DateTime? startDate, DateTime? endDate)
+        public IActionResult reports(string year, DateTime? month)
         {
             var modelContext = _context.Userrecipes.Include(u => u.Rec).Include(u => u.User).ToList();
-            ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
-            ViewBag.Totalsales = modelContext.Sum(x => (int)x.Rec.Price) * 0.1;
-            ViewBag.netprofit = 10 - ViewBag.Totalsales;
-            if (startDate == null && endDate == null)
-            {
-                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
 
+            int parsedYear;
+            bool isYearParsed = int.TryParse(year, out parsedYear);
+
+            // Filter by year if provided
+            if (isYearParsed)
+            {
+                modelContext = modelContext.Where(x => x.ReqDate.HasValue && x.ReqDate.Value.Year == parsedYear).ToList();
                 ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
                 ViewBag.Totalsales = modelContext.Sum(x => (int)x.Rec.Price) * 0.1;
                 ViewBag.netprofit = 10 - ViewBag.Totalsales;
                 return View(modelContext);
             }
-            else if (startDate != null && endDate == null)
-            {
 
-                modelContext = modelContext.Where(x => x.ReqDate.Value.Date >= startDate).ToList();
+            // Filter by month if provided
+            if (month.HasValue)
+            {
+                modelContext = modelContext.Where(x => x.ReqDate.HasValue && x.ReqDate.Value.Year == month.Value.Year && x.ReqDate.Value.Month == month.Value.Month).ToList();
                 ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
                 ViewBag.Totalsales = modelContext.Sum(x => (int)x.Rec.Price) * 0.1;
                 ViewBag.netprofit = 10 - ViewBag.Totalsales;
-
-
                 return View(modelContext);
             }
-            else if (startDate == null && endDate != null)
-            {
 
-                modelContext = modelContext.Where(x => x.ReqDate.Value.Date <= endDate).ToList();
-                ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
-                ViewBag.Totalsales = modelContext.Sum(x => (int)x.Rec.Price) * 0.1;
-                ViewBag.netprofit = 10 - ViewBag.Totalsales;
-                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
-
-                return View(modelContext);
-            }
+            // Calculate and set ViewBag properties
             else
             {
-
-                modelContext = modelContext.Where(x => x.ReqDate.Value.Date >= startDate && x.ReqDate.Value.Date <= endDate).ToList();
-                //ViewBag.TotalPrice = result.Sum(x => x.Product.Price * x.Quantity);
                 ViewBag.TotalPrice = modelContext.Sum(x => x.Rec.Price);
                 ViewBag.Totalsales = modelContext.Sum(x => (int)x.Rec.Price) * 0.1;
                 ViewBag.netprofit = 10 - ViewBag.Totalsales;
+
+                // Return the filtered data to the view
                 return View(modelContext);
             }
+            
         }
 
-        // Controller Action to retrieve and process data
-      
-     
+        public IActionResult changeadmin(int id)
+        {
+            var user = _context.Logins.Where(x => x.UserId == id).SingleOrDefault();
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult changeadmin(int id, string Username, string pass)
+        {
+            var userid = HttpContext.Session.GetInt32("AdminId");
+            var user = _context.Logins.Where(x => x.UserId == userid).SingleOrDefault();
+
+
+            user.Username = Username;
+            user.Password = pass;
+            user.UserId = userid;
+            user.LogId = id;
+            _context.Update(user);
+            _context.SaveChanges();
+            TempData["message"] = "You Are Successfully Changed your password or UserName  ";
+            return RedirectToAction("Adminprofile");
+        }
+
 
 
 
@@ -249,8 +264,10 @@ namespace MVCProject.Controllers
             ViewBag.chefnum = _context.Userinfos.Count(x => x.RoleId == 2);
             ViewBag.usernum = _context.Userinfos.Count(x => x.RoleId == 3);
             ViewBag.recipenum = _context.Recipes.Count();
-
-           var id = HttpContext.Session.GetInt32("AdminId");
+            ViewBag.recipenumaccept = _context.Recipes.Count(x => x.Status==1);
+            ViewBag.recipenumreject= _context.Recipes.Count(x => x.Status == 0);
+            ViewBag.order = _context.Userrecipes.Count();
+            var id = HttpContext.Session.GetInt32("AdminId");
 
             var user = _context.Userinfos.Where(x => x.UserId == id).SingleOrDefault();
             
@@ -273,6 +290,11 @@ namespace MVCProject.Controllers
             var user = _context.Userinfos.Where(x => x.UserId == id).SingleOrDefault();
             return View(user);
         }
+
+       
+
+
+
         public IActionResult Form()
         {
             return View();

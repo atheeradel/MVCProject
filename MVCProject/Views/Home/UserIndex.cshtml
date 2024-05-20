@@ -130,7 +130,7 @@
                                 <div class="col-md-12">
                                     <h1 class="m-b-20"><strong>@ViewBag.des</strong></h1>
                                     <p class="m-b-40">Discover our recipe for differant chef <br> around all the world </p>
-                                    <p><a class="btn hvr-hover" href="#">Discover Now </a></p>
+                                    <p><a class="btn hvr-hover" asp-action="searchrecipe">Discover Now </a></p>
                                 </div>
                             </div>
                         </div>
@@ -207,9 +207,9 @@ center; margin:30px" id="category">
             <div class="col-lg-12">
                 <div class="special-menu text-center">
                     <div class="button-group filter-button-group">
-                        <button class="active" data-filter="*">All</button>
-                        <button data-filter=".top-featured">Top featured</button>
-                        <button data-filter=".best-seller">Best seller</button>
+                        <button class="active" data-filter="*">Show Recipe</button>
+                        
+                        <button data-filter=".best-seller">Hide Recipe</button>
                     </div>
                 </div>
             </div>
@@ -274,7 +274,7 @@ center; margin:30px" id="category">
                     <ul class="social">
                         <li>
 
-                            <a asp-route-id="@item.UserId" asp-action="getrecipebychef" class="fa fa-plus"></a>
+                            <a asp-route-id="@item.UserId" asp-action="getrecipebychef" data-toggle="tooltip" data-placement="right" title="View chef Recipe" class="fa fa-plus"></a>
                         </li>
                        
                     </ul>

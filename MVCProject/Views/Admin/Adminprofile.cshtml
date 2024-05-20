@@ -2,7 +2,14 @@
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="page-header">
@@ -20,7 +27,7 @@
                     <div class="col">
                         <div class="login-box">
                             <div class="login-box">
-
+                                
                                 <a asp-action="EditAdmin" asp-controller="Admin" class="btn hvr-hover mb-3 bg-gradient-primary" style="color:white;" asp-route-id="@Model.UserId">Edit Profile</a>
                             </div>
 
@@ -42,7 +49,7 @@
 
                             </div>
                         </div>
-
+                        <a asp-action="changeadmin" asp-controller="Admin" class="btn hvr-hover mb-3 bg-gradient-primary" style="color:white;" asp-route-id="@Model.UserId">Change Password</a>
                     </div>
                     <div class="col-lg-8">
                         <div class="card mb-4">

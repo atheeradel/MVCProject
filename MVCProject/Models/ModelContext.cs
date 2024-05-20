@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using MVCProject.Models;
 
 namespace MVCProject.Models;
 
@@ -484,4 +485,6 @@ public partial class ModelContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public DbSet<MVCProject.Models.Profilephoto>? Profilephoto { get; set; }
 }

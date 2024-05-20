@@ -12,7 +12,7 @@
                 <div class="login-box">
                     <div class="login-box">
 
-                        <a asp-action="EditUser" asp-controller="Home" class="btn hvr-hover mb-3" style="color:white" asp-route-id="@Model.UserId">Edit Profile</a>
+                        <a asp-action="changeuser" asp-controller="Home" class="btn hvr-hover mb-3" style="color:white" asp-route-id="@Model.UserId">Change Password</a>
                     </div>
 
 
@@ -85,7 +85,7 @@
                            </div>
                     </div>
                 </div>
-                
+                <a asp-action="EditUser" asp-controller="Home" class="btn hvr-hover mb-3" style="color:white" asp-route-id="@Model.UserId">Edit Profile</a>
             </div>
         </div>
     </div>

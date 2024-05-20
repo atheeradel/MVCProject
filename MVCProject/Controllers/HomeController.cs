@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using MVCProject.Models;
 using System.Net.Mail;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using static iTextSharp.text.pdf.AcroFields;
+using System.ComponentModel;
 
 
 
@@ -37,6 +39,7 @@ namespace MVCProject.Controllers
         public IActionResult Aboutus()
         {
             ViewBag.aboutus=_context.Aboutus.ToList();
+            
             return View();
         }
         public IActionResult aboutususer()
@@ -249,6 +252,13 @@ namespace MVCProject.Controllers
             return View(rec);
         }
 
+        public IActionResult getrecipebycategorygust(int id)
+        {
+            var rec = _context.Recipes.Where(x => x.CatId == id && x.Status == 1).ToList();
+            ViewBag.category = _context.Categories.ToList();
+            return View(rec);
+        }
+
         public IActionResult getrecipebychef(int id)
         {
             var rec = _context.Recipes.Where(x => x.UserId == id && x.Status == 1).ToList();
@@ -259,37 +269,145 @@ namespace MVCProject.Controllers
         {
             var rec = _context.Recipes.Where(x => x.RecId == id).SingleOrDefault();
             ViewBag.recipe = _context.Recipes.Where(x => x.Status == 1).ToList();
+            var phone = _context.Contactus.Where(x => x.ContId == 22).SingleOrDefault();
+
+            ViewBag.phone = phone.Contactinfo;
             return View(rec);
         }
+
+        public IActionResult changeuser(int id)
+        {
+            var user = _context.Logins.Where(x => x.UserId == id).SingleOrDefault();
+            return View(user);
+        }
+        
+        [HttpPost]
+        public IActionResult changeuser(int id, string Username,string pass)
+        {
+            var userid = HttpContext.Session.GetInt32("UserId");
+            var user= _context.Logins.Where(x => x.UserId == userid).SingleOrDefault();
+          
+            
+                user.Username = Username;
+                user.Password = pass;
+                user.UserId = userid;
+                user.LogId = id;
+                _context.Update(user);
+            _context.SaveChanges();
+            return RedirectToAction("UserProfile");
+        }
+
+
+public IActionResult changechef(int id)
+        {
+            var user = _context.Logins.Where(x => x.UserId == id).SingleOrDefault();
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult changechef(int id, string Username, string pass)
+        {
+            var userid = HttpContext.Session.GetInt32("ChefId");
+            var user = _context.Logins.Where(x => x.UserId == userid).SingleOrDefault();
+
+
+            user.Username = Username;
+            user.Password = pass;
+            user.UserId = userid;
+            user.LogId = id;
+            _context.Update(user);
+            _context.SaveChanges();
+            return RedirectToAction("ChefProfile");
+        }
+
+
+
         public IActionResult ViewRecipes(int id)
         {
             var rec = _context.Recipes.Where(x => x.RecId == id).SingleOrDefault();
             ViewBag.recipe = _context.Recipes.Where(x => x.Status == 1).ToList();
+            var phone = _context.Contactus.Where(x => x.ContId == 22).SingleOrDefault();
+            
+            ViewBag.phone = phone.Contactinfo;
             return View(rec);
         }
 
         public IActionResult searchrecipe()
         {
+            
             var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
             ViewBag.category = _context.Categories.ToList();
             return View(rec);
         }
 
         [HttpPost]
-        public IActionResult searchrecipe(string word)
+        public IActionResult searchrecipe(string word, int i)
         {
-            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
-            ViewBag.category = _context.Categories.ToList();
-            word = word.ToLower();
-            if (String.IsNullOrEmpty(word))
+            if (word != null)
             {
-                return View(rec);
+                var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+                ViewBag.category = _context.Categories.ToList();
+                word = word.ToLower();
+                if (String.IsNullOrEmpty(word))
+                {
+                    return View(rec);
+                }
+                else
+                {
+                    rec = rec.Where(s => s.Name.ToLower().Contains(word)).ToList();
+                    return View(rec);
+                }
             }
             else
             {
-                rec = rec.Where(s => s.Name.ToLower().Contains(word)).ToList();
-                return View(rec);
+                if (i == 2)
+                {
+                    var rec1 = _context.Recipes.Where(x => x.Status == 1).OrderByDescending(x => x.Price).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec1);
+                }
+                if (i == 3)
+                {
+                    var rec2 = _context.Recipes.Where(x => x.Status == 1).OrderBy(x => x.Price).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec2);
+
+                }
+                if (i == 4)
+                {
+                    var userRecipeIds = _context.Userrecipes.Select(x => x.RecId).ToList();
+
+
+                    var recipes = _context.Recipes.Where(x => x.Status == 1 && userRecipeIds.Contains(x.RecId)).ToList();
+
+
+                    ViewBag.category = _context.Categories.ToList();
+
+                    return View(recipes);
+
+                }
+                if (i == 5)
+                {
+
+                    var userRecipeIds = _context.Wishlists.Select(x => x.RecId).ToList();
+
+
+                    var recipes = _context.Recipes.Where(x => x.Status == 1 && userRecipeIds.Contains(x.RecId)).ToList();
+
+
+                    ViewBag.category = _context.Categories.ToList();
+
+                    return View(recipes);
+                }
+                else
+                {
+                    var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec);
+                }
+
             }
+
+
 
 
 
@@ -302,36 +420,95 @@ namespace MVCProject.Controllers
             return View(rec);
         }
 
+       
+
+
         [HttpPost]
-        public IActionResult searchrecipechef(string word)
+        public IActionResult searchrecipechef(string word ,int i)
         {
-            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
-            ViewBag.category = _context.Categories.ToList();
-            word = word.ToLower();
-            if (String.IsNullOrEmpty(word))
+            if (word != null)
             {
-                return View(rec);
+                var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+                ViewBag.category = _context.Categories.ToList();
+                word = word.ToLower();
+                if (String.IsNullOrEmpty(word))
+                {
+                    return View(rec);
+                }
+                else
+                {
+                    rec = rec.Where(s => s.Name.ToLower().Contains(word)).ToList();
+                    return View(rec);
+                }
             }
             else
             {
-                rec = rec.Where(s => s.Name.ToLower().Contains(word)).ToList();
-                return View(rec);
+                if (i == 2)
+                {
+                    var rec1 = _context.Recipes.Where(x => x.Status == 1).OrderByDescending(x => x.Price).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec1);
+                }
+                if (i == 3)
+                {
+                    var rec2 = _context.Recipes.Where(x => x.Status == 1).OrderBy(x => x.Price).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec2);
+
+                }
+                if (i == 4)
+                {
+                    var userRecipeIds = _context.Userrecipes.Select(x => x.RecId).ToList();
+
+
+                    var recipes = _context.Recipes.Where(x => x.Status == 1 && userRecipeIds.Contains(x.RecId)).ToList();
+
+
+                    ViewBag.category = _context.Categories.ToList();
+
+                    return View(recipes);
+
+                }
+                if (i == 5)
+                {
+
+                    var userRecipeIds = _context.Wishlists.Select(x => x.RecId).ToList();
+
+
+                    var recipes = _context.Recipes.Where(x => x.Status == 1 && userRecipeIds.Contains(x.RecId)).ToList();
+
+
+                    ViewBag.category = _context.Categories.ToList();
+
+                    return View(recipes);
+                }
+                else
+                {
+                    var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec);
+                }
+
             }
 
 
-        }
 
+
+        }
+        
         public IActionResult searchrecipegust()
         {
             var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
             ViewBag.category = _context.Categories.ToList();
             return View(rec);
         }
+         
+     
 
         [HttpPost]
-        public IActionResult searchrecipegust(string word)
+        public IActionResult searchrecipegust(string word, int i)
         {
-            var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+            if(word != null) {  var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
             ViewBag.category = _context.Categories.ToList();
             word=word.ToLower();
             if (String.IsNullOrEmpty(word))
@@ -343,7 +520,57 @@ namespace MVCProject.Controllers
                 rec = rec.Where(s => s.Name.ToLower().Contains(word)).ToList();
                 return View(rec);
             }
+}
+            else
+            {
+                if (i == 2)
+                {
+                    var rec1 = _context.Recipes.Where(x => x.Status == 1).OrderByDescending(x => x.Price).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec1);
+                }
+                if (i == 3)
+                {
+                    var rec2 = _context.Recipes.Where(x => x.Status == 1).OrderBy(x => x.Price).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec2);
 
+                }
+                if (i == 4)
+                {
+                    var userRecipeIds = _context.Userrecipes.Select(x => x.RecId).ToList();
+
+                    
+                    var recipes = _context.Recipes.Where(x => x.Status == 1 && userRecipeIds.Contains(x.RecId)).ToList();
+                
+                  
+                   ViewBag.category = _context.Categories.ToList();
+         
+                   return View(recipes);
+
+                }
+                if (i == 5)
+                {
+
+                    var userRecipeIds = _context.Wishlists.Select(x => x.RecId).ToList();
+
+
+                    var recipes = _context.Recipes.Where(x => x.Status == 1 && userRecipeIds.Contains(x.RecId)).ToList();
+
+
+                    ViewBag.category = _context.Categories.ToList();
+
+                    return View(recipes);
+                }
+                else
+                {
+                    var rec = _context.Recipes.Where(x => x.Status == 1).ToList();
+                    ViewBag.category = _context.Categories.ToList();
+                    return View(rec);
+                }
+
+            }
+           
 
         }
 
@@ -494,7 +721,10 @@ namespace MVCProject.Controllers
             msg.Msg= Msg;
             _context.Add(msg);
             _context.SaveChanges();
+            ViewBag.Con = _context.Userinfos.Where(x => x.RoleId == 1).ToList();
+            ViewBag.ad = _context.Contactus.Where(x => x.ContId == 1).ToList();
             TempData["message"] = "Your Message Successfully Send";
+
             return  View();
         }
         [HttpPost]
@@ -509,6 +739,8 @@ namespace MVCProject.Controllers
             msg.Msg = Msg;
             _context.Add(msg);
             _context.SaveChanges();
+            ViewBag.Con = _context.Userinfos.Where(x => x.RoleId == 1).ToList();
+            ViewBag.ad = _context.Contactus.Where(x => x.ContId == 1).ToList();
             TempData["message"] = "Your Message Successfully Send";
             return View();
         }
@@ -524,6 +756,8 @@ namespace MVCProject.Controllers
             msg.Msg = Msg;
             _context.Add(msg);
             _context.SaveChanges();
+            ViewBag.Con = _context.Userinfos.Where(x => x.RoleId == 1).ToList();
+            ViewBag.ad = _context.Contactus.Where(x => x.ContId == 1).ToList();
             TempData["message"] = "Your Message Successfully Send";
             return View();
         }
@@ -571,14 +805,22 @@ namespace MVCProject.Controllers
         public IActionResult Addwishlist(int id)
         {
             var user = HttpContext.Session.GetInt32("UserId");
-            Wishlist list = new Wishlist();
-            list.UserId = user;
-            list.RecId = id;
-
-            _context.Add(list);
-            _context.SaveChanges();
             
-           return RedirectToAction("WhishIndex");
+            bool isRecipeInWishlist = _context.Wishlists.Any(w => w.RecId == id && w.UserId == user);
+
+            if (!isRecipeInWishlist)
+            {
+                Wishlist list = new Wishlist();
+                list.UserId = user;
+                list.RecId = id;
+
+                _context.Add(list);
+                _context.SaveChanges();
+
+                return RedirectToAction("WhishIndex");
+            }
+            TempData["message"] = "This Recipe already in your whishlist";
+            return RedirectToAction("WhishIndex");
         }
 
         public IActionResult WhishIndex()

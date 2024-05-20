@@ -61,7 +61,7 @@
             <div class="col-lg-12">
                 <h2>Recipe</h2>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="UserIndex" asp-controller="Home">Home</a></li>
                     <li class="breadcrumb-item active">Recipe</li>
                 </ul>
             </div>
@@ -78,14 +78,19 @@
                     <div class="product-item-filter row">
                         <div class="col-12 col-sm-8 text-center text-sm-left">
                             <div class="toolbar-sorter-right">
-                                <span>Sort by </span>
-                                <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                                <span> Choose Filter </span>
+                                <form asp-action="searchrecipe" asp-controller="Home">
+                                    <select id="basic" class="selectpicker show-tick form-control" name="i" data-placeholder="$ USD">
 
 
-                                    <option value="2">High Price → High Price</option>
-                                    <option value="3">Low Price → High Price</option>
-                                    <option value="4">Best Selling</option>
-                                </select>
+                                        <option value="2">High Price → Low Price</option>
+                                        <option value="3">Low Price → High Price</option>
+                                        <option value="4">Selling Recipe</option>
+                                        <option value="5"> Preferred Recipe</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm hvr-hover" style="color:white">Filter</button>
+
+                                </form>
                             </div>
 
                         </div>
@@ -117,9 +122,9 @@
                                                          asp-append-version="true" class=" img-fluid" style="width: 400px; height:250px" />
                                                     <div class="mask-icon">
                                                         <ul>
-                                                            <li><a asp-action="ViewRecipe" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                            <li><a asp-action="ViewRecipes" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
 
-                                                            <li><a asp-action="Create" asp-controller="Wishlists" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                            <li><a asp-action="Addwishlist" asp-route-id="@item.RecId" asp-controller="Home" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
 
                                                     </div>
@@ -150,9 +155,10 @@
                                                              asp-append-version="true" class=" img-fluid" style="width: 400px; height:250px" />
                                                         <div class="mask-icon">
                                                             <ul>
-                                                                <li><a asp-action="ViewRecipe" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                                <li><a asp-action="ViewRecipes" asp-route-id="@item.RecId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
 
-                                                                <li><a asp-action ="Create" asp-controller="Wishlists" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a>
+                                                                <li>
+                                                                    <a asp-action="Addwishlist" asp-route-id="@item.RecId" asp-controller="Home" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a>
 
                                         </li>
                                                             </ul>
@@ -167,7 +173,7 @@
                                                     <h5>  $@item.Price</h5>
                                                     <p>
                                                         @item.Ingrediants<br />
-                                                        @item.Instruction
+                                                      
 
                                                     </p>
                                                     <a class="btn hvr-hover" asp-action="checkout" asp-route-id="@item.RecId">Buy Recipe</a>

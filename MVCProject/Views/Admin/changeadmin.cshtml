@@ -1,0 +1,69 @@
+﻿@model Login
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+
+    .intro {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+</style>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title">
+<section class="intro">
+    <div>
+
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="card" style="border-radius: 1rem;">
+                            <div class="card-body p-5">
+
+                                <h3 class="mb-5 text-center" style="font-family: 'Times New Roman'">Change your login info</h3>
+
+                                <form asp-action="changeadmin" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="LogId" />
+                                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                                <label class="form-label" for="form6Example1" style="font-family: 'Times New Roman'">User Name</label>
+                                                <input name="Username" type="text" id="form6Example1" class="form-control" required />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                                <label class="form-label" for="form6Example2" style="font-family: 'Times New Roman'">Change Password</label>
+                                                <input name="pass" type="password" id="form6Example2" class="form-control" reguired />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+                                    <!-- Submit button -->
+                                    <button type="submit" class="btn hvr-hover mb-3 bg-gradient-primary">Change </button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div></div></div>
