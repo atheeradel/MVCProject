@@ -55,7 +55,7 @@ namespace MVCProject.Controllers
         }
         public IActionResult contactus()
         {
-            ViewBag.con = _context.Userinfos.Where(x => x.RoleId == 1).ToList();
+            ViewBag.Con = _context.Userinfos.Where(x => x.RoleId == 1).ToList();
             ViewBag.ad = _context.Contactus.Where(x => x.ContId == 1).ToList();
             return View();
         }
@@ -188,6 +188,7 @@ namespace MVCProject.Controllers
                     //MailAddress from = new MailAddress("MasterChef@gamil.com");
                     mail.From = new MailAddress("liliane79@ethereal.email");
                     mail.To.Add($"{record.Email}");
+                    mail.Subject="YOUR Recipe Purchased";
                     mail.Body = $"Thank You {record.Firstname} {record.Lastname} for your Purchase  your invoice is ${r.Price} and your recipe is by this attached Pdf File"; ;
                     Attachment attachment = new Attachment("D:\\dirsttask\\MVCProject - Copy\\MVCProject\\wwwroot\\pdfs\\Recipe.pdf");
                     mail.Attachments.Add(attachment);

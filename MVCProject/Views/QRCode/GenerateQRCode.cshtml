@@ -1,0 +1,20 @@
+﻿
+
+@{
+    ViewData["Title"] = "Generate QR Code";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h2>Scan this QR Code to access the PDF</h2>
+        <img src="@Url.Action("GenerateQRCode", "QRCode")" alt="QR Code" style="max-width: 300px;" />
+        <p>You can use any QR code scanner app on your phone to scan the QR code.</p>
+    </div>
+</body>
+</html>

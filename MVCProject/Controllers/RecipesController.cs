@@ -21,12 +21,12 @@ namespace MVCProject.Controllers
         }
 
         // GET: Recipes
-        public async Task<IActionResult> Index(int id )
+        public async Task<IActionResult> Index( )
         {
-           
-            
-            
-var modelContext = _context.Recipes.Where(x => x.UserId == id).Include(r => r.Cat).Include(r => r.User);
+
+            var userid = HttpContext.Session.GetInt32("ChefId");
+
+            var modelContext = _context.Recipes.Where(x => x.UserId == userid).Include(r => r.Cat).Include(r => r.User);
             return View(await modelContext.ToListAsync());
            
         }
@@ -88,7 +88,7 @@ var modelContext = _context.Recipes.Where(x => x.UserId == id).Include(r => r.Ca
                 _context.Add(recipe);
                 await _context.SaveChangesAsync();
                 TempData["message"] = "You Are Successfully Added your recipe to MasterChef";
-                return RedirectToAction("ChefIndex", "Home");
+                return RedirectToAction("Index", "Recipes");
             }
             ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatId", recipe.CatId);
             
@@ -160,8 +160,8 @@ var modelContext = _context.Recipes.Where(x => x.UserId == id).Include(r => r.Ca
                         throw;
                     }
                 }
-                
-                return RedirectToAction("ChefIndex", "Home");
+
+                 return RedirectToAction("Index", "Recipes"); 
 
             }
             ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatId", recipe.CatId);
@@ -206,7 +206,7 @@ var modelContext = _context.Recipes.Where(x => x.UserId == id).Include(r => r.Ca
             
             await _context.SaveChangesAsync();
             TempData["message"] = "You Are Successfully Delete your recipe to MasterChef";
-            return RedirectToAction("ChefIndex", "Home");
+            return RedirectToAction("Index", "Recipes");
         }
 
         private bool RecipeExists(decimal id)
