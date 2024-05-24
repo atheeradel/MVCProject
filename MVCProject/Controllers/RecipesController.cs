@@ -25,7 +25,9 @@ namespace MVCProject.Controllers
         {
 
             var userid = HttpContext.Session.GetInt32("ChefId");
-
+            var name = _context.Userinfos.Where(x => x.UserId == userid).SingleOrDefault();
+            ViewBag.chefname = name.Firstname;
+            ViewBag.last = name.Lastname;
             var modelContext = _context.Recipes.Where(x => x.UserId == userid).Include(r => r.Cat).Include(r => r.User);
             return View(await modelContext.ToListAsync());
            
@@ -55,7 +57,9 @@ namespace MVCProject.Controllers
         public IActionResult Create()
         {
             ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatName");
-           
+            var home = _context.Homepages.Where(x => x.PageId == 1).SingleOrDefault();
+            
+            ViewBag.logo = home.Imglogo;
 
             return View();
         }

@@ -61,14 +61,16 @@ namespace MVCProject.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 if (homepage.ImageFile != null)
                 {
                     string wwwrootPath = _webHostEnvironment.WebRootPath;
                     string imageName = Guid.NewGuid().ToString() + "_" + homepage.ImageFile.FileName;
                     string fullPath = Path.Combine(wwwrootPath + "/img/", imageName);
+
                     using (var fileStream = new FileStream(fullPath, FileMode.Create))
                     {
-                        homepage.ImageFile.CopyToAsync(fileStream);
+                        await homepage.ImageFile.CopyToAsync(fileStream);
                     }
                     homepage.Imglogo = imageName;
                 }

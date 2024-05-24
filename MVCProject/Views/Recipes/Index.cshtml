@@ -13,13 +13,16 @@
     </script>
 }
 <div class="main-panel">
-    <div class="content-wrapper">
+    <div class="content-wrapper text-center" style="font-family:'Times New Roman'">
 <h1 class="mb-5 mt-5">
-    <a asp-action="Create" class=" btn hvr-hover m-1 " style="color:white">Create New Recipe</a>
-</h1>
+            @ViewBag.chefname
+           @ViewBag.last   Recipe
+        </h1>
+
 <div class="wishlist-box-main">
-    <div class="container">
+            <div class="container" style="height:1000px">
         <div class="row">
+                    <a asp-action="Create" class=" btn hvr-hover m-4  " style="color:white">Create New Recipe</a>
             <div class="col-sm-12">
                 <div class="table-main ">
                     <table class="table" id="example">

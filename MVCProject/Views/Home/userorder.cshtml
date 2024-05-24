@@ -11,30 +11,34 @@
 	</script>
 }
 <h1 style="text-align:center" class="m-4">My orders </h1>
-<div class="row my-5">
-	<div class="card card-outline-secondary my-4 m-4">
-		<div class="card-header">
-			<h2> My Orders</h2>
-		</div>
-		<div class="card-body  " >
-			@foreach(var item in Model)
-			{
-				<div class="media mb-3">
-				<div class="mr-2">
-						<img src=@Url.Content("~/Images/" + item.Rec.Image)
-							 asp-append-version="true"  class="rounded-circle border p-1" width="150px" height="150px" />
-				</div>
-				<div class="media-body">
-						<h4> @Html.DisplayFor(modelItem => item.Rec.Name)</h4>
-						<h3 class="text-muted"> $@Html.DisplayFor(modelItem => item.Rec.Price)</h3>
-						<h4>Purchase Date:@Html.DisplayFor(modelItem => item.ReqDate)</h4>
-						<h4>@Html.DisplayFor(modelItem => item.Rec.Instruction)@Html.DisplayFor(modelItem => item.Rec.Ingrediants)</h4>
-				</div>
-			</div><hr>
-			}
-			
-			
-			
-		</div>
-	</div>
+<div class="container" style="height:1000px">
+    <div class="row my-5">
+        <div class="card card-outline-secondary my-4 m-4">
+            <div class="card-header">
+                <h2> My Orders</h2>
+            </div>
+            <div class="card-body  ">
+                @foreach (var item in Model)
+                {
+                    <div class="media mb-3">
+                        <div class="mr-2">
+                            <img src=@Url.Content("~/Images/" + item.Rec.Image)
+                                 asp-append-version="true" class="rounded-circle border p-1" width="150px" height="150px" />
+                        </div>
+                        <div class="media-body">
+                            <h4> @Html.DisplayFor(modelItem => item.Rec.Name)</h4>
+                            <h3 class="text-muted"> $@Html.DisplayFor(modelItem => item.Rec.Price)</h3>
+                            <h4>Purchase Date:@Html.DisplayFor(modelItem => item.ReqDate)</h4>
+                            <h4>@Html.DisplayFor(modelItem => item.Rec.Instruction)@Html.DisplayFor(modelItem => item.Rec.Ingrediants)</h4>
+                        </div>
+                    </div>
+
+                    <hr>
+                }
+
+
+
+            </div>
+        </div>
+    </div>
 </div>

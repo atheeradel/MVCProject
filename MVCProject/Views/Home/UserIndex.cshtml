@@ -2,7 +2,14 @@
 @{
     Layout = "~/Views/Shared/_Homeindex.cshtml";
 }
-
+@if (TempData["message"] != null)
+{
+    <script src="/lib/jquery//dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["message"]');
+    </script>
+}
     <!-- Start Main Top -->
     <div class="main-top">
         <div class="container-fluid">
@@ -321,13 +328,13 @@ center; margin:30px" id="category">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
                             <h3>SubScribe to email Service</h3>
-                            <form class="newsletter-box">
-                                <div class="form-group">
-                                    <input class="" type="email" name="Email" placeholder="Email Address*" />
-                                    <i class="fa fa-envelope"></i>
-                                </div>
-                                <button class="btn hvr-hover" type="submit">Subscribe</button>
-                            </form>
+                        <form class="newsletter-box" method="post" asp-action="usergenerate" asp-controller="QRCode">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="Email" placeholder="Email Address*" />
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <button class="btn hvr-hover" type="submit">Subscribe</button>
+                        </form>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
