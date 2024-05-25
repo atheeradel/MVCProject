@@ -849,13 +849,9 @@ public IActionResult changechef(int id)
         }
 
 
-
-
-
         [HttpPost]
-        public async Task<IActionResult> EditProfile(int id,[Bind("UserId", "Firstname", "Lastname", "Email", "Address", "Age", "Phonenum", "ImageFile")]Userinfo user)
+        public async Task<IActionResult> EditProfile(int id, [Bind("UserId,Firstname,Lastname,Email,Address,Age,Phonenum,ImageFile")] Userinfo user)
         {
-
             if (id != user.UserId)
             {
                 return NotFound();
@@ -867,17 +863,28 @@ public IActionResult changechef(int id)
                 {
                     if (user.ImageFile != null)
                     {
+                        // Check if the file is an image
+                        var supportedTypes = new[] { "image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp" };
+                        var mimeType = user.ImageFile.ContentType;
+
+                        if (!supportedTypes.Contains(mimeType))
+                        {
+                            TempData["message"] = "please  upload image file only try again!";
+                            return View(user);
+                        }
+
                         string wwwrootPath = _webHostEnvironment.WebRootPath;
                         string imageName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
                         string fullPath = Path.Combine(wwwrootPath + "/Images/", imageName);
+
                         using (var fileStream = new FileStream(fullPath, FileMode.Create))
                         {
-                            user.ImageFile.CopyToAsync(fileStream);
+                            await user.ImageFile.CopyToAsync(fileStream);
                         }
                         user.ImagePath = imageName;
                         user.RoleId = 2;
-
                     }
+
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
@@ -898,9 +905,8 @@ public IActionResult changechef(int id)
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUser(int id, [Bind("UserId", "Firstname", "Lastname", "Email", "Address", "Age", "Phonenum", "ImageFile")] Userinfo user)
+        public async Task<IActionResult> EditUser(int id, [Bind("UserId,Firstname,Lastname,Email,Address,Age,Phonenum,ImageFile")] Userinfo user)
         {
-
             if (id != user.UserId)
             {
                 return NotFound();
@@ -912,17 +918,28 @@ public IActionResult changechef(int id)
                 {
                     if (user.ImageFile != null)
                     {
+                        // Check if the file is an image
+                        var supportedTypes = new[] { "image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp" };
+                        var mimeType = user.ImageFile.ContentType;
+
+                        if (!supportedTypes.Contains(mimeType))
+                        {
+                            TempData["message"] = "please  upload image file only try again!";
+                            return View(user);
+                        }
+
                         string wwwrootPath = _webHostEnvironment.WebRootPath;
                         string imageName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
                         string fullPath = Path.Combine(wwwrootPath + "/Images/", imageName);
+
                         using (var fileStream = new FileStream(fullPath, FileMode.Create))
                         {
-                            user.ImageFile.CopyToAsync(fileStream);
+                            await user.ImageFile.CopyToAsync(fileStream);
                         }
                         user.ImagePath = imageName;
                         user.RoleId = 3;
-
                     }
+
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
@@ -941,6 +958,98 @@ public IActionResult changechef(int id)
             }
             return View(user);
         }
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> EditProfile(int id,[Bind("UserId", "Firstname", "Lastname", "Email", "Address", "Age", "Phonenum", "ImageFile")]Userinfo user)
+        //{
+
+        //    if (id != user.UserId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            if (user.ImageFile != null)
+        //            {
+        //                string wwwrootPath = _webHostEnvironment.WebRootPath;
+        //                string imageName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
+        //                string fullPath = Path.Combine(wwwrootPath + "/Images/", imageName);
+        //                using (var fileStream = new FileStream(fullPath, FileMode.Create))
+        //                {
+        //                    user.ImageFile.CopyToAsync(fileStream);
+        //                }
+        //                user.ImagePath = imageName;
+        //                user.RoleId = 2;
+
+        //            }
+        //            _context.Update(user);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!UserinfoExists(user.UserId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(ChefProfile));
+        //    }
+        //    return View(user);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> EditUser(int id, [Bind("UserId", "Firstname", "Lastname", "Email", "Address", "Age", "Phonenum", "ImageFile")] Userinfo user)
+        //{
+
+        //    if (id != user.UserId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            if (user.ImageFile != null)
+        //            {
+        //                string wwwrootPath = _webHostEnvironment.WebRootPath;
+        //                string imageName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
+        //                string fullPath = Path.Combine(wwwrootPath + "/Images/", imageName);
+        //                using (var fileStream = new FileStream(fullPath, FileMode.Create))
+        //                {
+        //                    user.ImageFile.CopyToAsync(fileStream);
+        //                }
+        //                user.ImagePath = imageName;
+        //                user.RoleId = 3;
+
+        //            }
+        //            _context.Update(user);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!UserinfoExists(user.UserId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(UserProfile));
+        //    }
+        //    return View(user);
+        //}
         public IActionResult privacypolicyGust()
         {
             return View();

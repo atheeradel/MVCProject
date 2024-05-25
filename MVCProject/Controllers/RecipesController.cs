@@ -67,37 +67,86 @@ namespace MVCProject.Controllers
         // POST: Recipes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RecId,UserId,CatId,Name,Price,Ingrediants,Instruction,ImageFile,Status")] Recipe recipe)
-        {  
+        {
+           
             if (ModelState.IsValid)
             {
-
                 if (recipe.ImageFile != null)
                 {
+                    // Check if the file is an image
+                    var supportedTypes = new[] { "image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp" };
+                    var mimeType = recipe.ImageFile.ContentType;
+
+                    if (!supportedTypes.Contains(mimeType))
+                    {
+                        var home = _context.Homepages.Where(x => x.PageId == 1).SingleOrDefault();
+
+                        ViewBag.logo = home.Imglogo;
+                        TempData["message"] = "please upload image file only try again!";
+                        ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatId", recipe.CatId);
+                        return View(recipe);
+                    }
+
                     string wwwrootPath = _webHostEnvironment.WebRootPath;
                     string imageName = Guid.NewGuid().ToString() + "_" + recipe.ImageFile.FileName;
                     string fullPath = Path.Combine(wwwrootPath + "/Images/", imageName);
+
                     using (var fileStream = new FileStream(fullPath, FileMode.Create))
                     {
-                        recipe.ImageFile.CopyToAsync(fileStream);
+                        await recipe.ImageFile.CopyToAsync(fileStream);
                     }
                     recipe.Image = imageName;
                 }
-                
-                recipe.UserId= HttpContext.Session.GetInt32("ChefId");
 
+                recipe.UserId = HttpContext.Session.GetInt32("ChefId");
                 recipe.Dateadd = DateTime.Now;
                 _context.Add(recipe);
                 await _context.SaveChangesAsync();
-                TempData["message"] = "You Are Successfully Added your recipe to MasterChef";
+                TempData["message"] = "You have successfully added your recipe to MasterChef.";
                 return RedirectToAction("Index", "Recipes");
             }
             ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatId", recipe.CatId);
-            
             return View(recipe);
         }
+
+
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("RecId,UserId,CatId,Name,Price,Ingrediants,Instruction,ImageFile,Status")] Recipe recipe)
+        //{  
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        if (recipe.ImageFile != null)
+        //        {
+        //            string wwwrootPath = _webHostEnvironment.WebRootPath;
+        //            string imageName = Guid.NewGuid().ToString() + "_" + recipe.ImageFile.FileName;
+        //            string fullPath = Path.Combine(wwwrootPath + "/Images/", imageName);
+        //            using (var fileStream = new FileStream(fullPath, FileMode.Create))
+        //            {
+        //                recipe.ImageFile.CopyToAsync(fileStream);
+        //            }
+        //            recipe.Image = imageName;
+        //        }
+
+        //        recipe.UserId= HttpContext.Session.GetInt32("ChefId");
+
+        //        recipe.Dateadd = DateTime.Now;
+        //        _context.Add(recipe);
+        //        await _context.SaveChangesAsync();
+        //        TempData["message"] = "You Are Successfully Added your recipe to MasterChef";
+        //        return RedirectToAction("Index", "Recipes");
+        //    }
+        //    ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatId", recipe.CatId);
+
+        //    return View(recipe);
+        //}
 
         // GET: Recipes/Edit/5
         public async Task<IActionResult> Edit(decimal? id)
@@ -120,6 +169,7 @@ namespace MVCProject.Controllers
         // POST: Recipes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(decimal id, [Bind("RecId,UserId,CatId,Name,Price,Ingrediants,Instruction,ImageFile,Status")] Recipe recipe)
@@ -133,25 +183,37 @@ namespace MVCProject.Controllers
             {
                 try
                 {
-
                     if (recipe.ImageFile != null)
                     {
+                        // Check if the file is an image
+                        var supportedTypes = new[] { "image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp" };
+                        var mimeType = recipe.ImageFile.ContentType;
+
+                        if (!supportedTypes.Contains(mimeType))
+                        {
+                            TempData["message"] = "please  upload image file only try again!";
+                            ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatId", recipe.CatId);
+                            return View(recipe);
+                        }
+
                         string wwwrootPath = _webHostEnvironment.WebRootPath;
                         string imageName = Guid.NewGuid().ToString() + "_" + recipe.ImageFile.FileName;
                         string fullPath = Path.Combine(wwwrootPath + "/Images/", imageName);
+
                         using (var fileStream = new FileStream(fullPath, FileMode.Create))
                         {
-                            recipe.ImageFile.CopyToAsync(fileStream);
+                            await recipe.ImageFile.CopyToAsync(fileStream);
                         }
                         recipe.Image = imageName;
                     }
 
                     recipe.UserId = HttpContext.Session.GetInt32("ChefId");
                     recipe.Dateadd = DateTime.Now;
-                    
+
                     _context.Update(recipe);
                     await _context.SaveChangesAsync();
-                    TempData["message"] = "You Are Successfully Edit your recipe to MasterChef";
+                    TempData["message"] = "You have successfully edited your recipe in MasterChef.";
+                    return RedirectToAction("Index", "Recipes");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -164,14 +226,72 @@ namespace MVCProject.Controllers
                         throw;
                     }
                 }
-
-                 return RedirectToAction("Index", "Recipes"); 
-
             }
+
             ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatId", recipe.CatId);
-           
             return View(recipe);
         }
+
+
+
+
+
+
+
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(decimal id, [Bind("RecId,UserId,CatId,Name,Price,Ingrediants,Instruction,ImageFile,Status")] Recipe recipe)
+        //{
+        //    if (id != recipe.RecId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+
+        //            if (recipe.ImageFile != null)
+        //            {
+        //                string wwwrootPath = _webHostEnvironment.WebRootPath;
+        //                string imageName = Guid.NewGuid().ToString() + "_" + recipe.ImageFile.FileName;
+        //                string fullPath = Path.Combine(wwwrootPath + "/Images/", imageName);
+        //                using (var fileStream = new FileStream(fullPath, FileMode.Create))
+        //                {
+        //                    recipe.ImageFile.CopyToAsync(fileStream);
+        //                }
+        //                recipe.Image = imageName;
+        //            }
+
+        //            recipe.UserId = HttpContext.Session.GetInt32("ChefId");
+        //            recipe.Dateadd = DateTime.Now;
+
+        //            _context.Update(recipe);
+        //            await _context.SaveChangesAsync();
+        //            TempData["message"] = "You Are Successfully Edit your recipe to MasterChef";
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!RecipeExists(recipe.RecId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+
+        //         return RedirectToAction("Index", "Recipes"); 
+
+        //    }
+        //    ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "CatId", recipe.CatId);
+
+        //    return View(recipe);
+        //}
 
         // GET: Recipes/Delete/5
         public async Task<IActionResult> Delete(decimal? id)
